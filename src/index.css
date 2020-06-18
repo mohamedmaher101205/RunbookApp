@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  font-family: Abel;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.appcontainer{
+  background-color: whitesmoke;
+  font-family: Abel !important;
+}
+
+@font-face{
+  font-family: 'Abel';
+  src : local('Abel'), url(./Fonts/Abel-Regular.ttf) format('truetype')
+}

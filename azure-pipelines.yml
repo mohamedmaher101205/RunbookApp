@@ -1,0 +1,94 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+#every branch
+trigger:
+- '*'
+ 
+
+pool:
+  vmImage: 'ubuntu-latest'
+  demands:
+  - npm
+  - node.js
+
+variables:
+  artifactName: 'RunBook-WEB' 
+
+
+steps:
+- script: sudo mkdir ~/.npm && sudo chown -R $(whoami) ~/.npm
+  displayName: Handle Permissions on NPM Directory
+- script: sudo npm ci --loglevel=error --no-update-notifier --unsafe-perm --registry=https://registry.npmjs.org/ --sass-binary-path=~/linux-x64-64_binding.node
+  displayName: Run NPM Install
+# - script: CI=true npm run test:ci
+#   displayName: Run Tests
+- script: CI=true npm run lint
+  displayName: Run Lint
+
+- task: PublishCodeCoverageResults@1
+
+  displayName: Publish Coverage Results
+  inputs:
+    codeCoverageTool: cobertura
+    summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
+    pathToSources: $(System.DefaultWorkingDirectory)/src
+
+- task: PublishTestResults@2
+  displayName: Publish Test Results
+  inputs:
+    testResultsFormat: JUnit
+    testResultsFiles: junit.xml
+    searchFolder: '$(System.DefaultWorkingDirectory)/test'
+    mergeTestResults: true
+    testRunTitle: 'Jest Unit Tests'
+
+  
+# Short script to test npm audit and retry the command if the error code ENOAUDIT is found
+# i.e. if the npm audit service is temporarily unavailable and unable to give results
+# Any other error is not ignored, only ENOAUDIT. 
+# - script: |
+#     n=0
+#     until [ $n -ge 3 ]
+#     do
+#       n=$[$n+1]
+#       echo Attempt $n...
+#       output=$(npm audit --registry=https://registry.npmjs.org/ 2>&1) # 2>&1 redirects stderr to stdout
+#       exitCode=$? #get the exit code from the npm audit command
+#       echo npm audit output:
+#       echo "$output" 
+#       if [[ "$output" != *"ENOAUDIT"* ]] # if the ENOAUDIT error was not thrown, exit with the same code and message as npm audit
+#       then 
+#         if [ ! $exitCode -eq 0 ] 
+#         then
+#           echo Exiting with code $exitCode
+#           exit $exitCode
+#         fi
+#         break 
+#       fi #if the ENOAUDIT does exist, attempt the npm audit command again (up to 3 times)
+#       sleep 3
+#     done
+
+  # displayName: Run NPM Audit (retry up to 3 times)
+- task: Npm@1
+  displayName: 'Build'
+  inputs:
+    customCommand: run build
+    command: custom
+- task: ArchiveFiles@2
+
+  displayName: 'Archive files'
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/build'
+    includeRootFolder: false
+
+ 
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: '$(artifactName)'
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), endsWith(variables['Build.SourceVersionMessage'], '[PromoteToDev]')))
