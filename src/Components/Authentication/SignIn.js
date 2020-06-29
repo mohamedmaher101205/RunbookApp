@@ -68,13 +68,13 @@ function MSignIn() {
   return (
     sessionStorage.getItem('token') === null || typeof(sessionStorage.getItem('token')) === 'undefined' ?
     <div className="app-bg">
-    <Row>
-      <Col sm={1}></Col>
+    <Row >
+      <Col sm={1} ></Col>
       
-      <Col sm={7}minwidth='xs'>
+      <Col sm={9}>
         <Container component="main" minwidth ='xs' maxWidth="sm" className="loginContainer" >
           <CssBaseline />
-          <div>
+          {/* <div> */}
           <Row>
           <Col sm={5}minwidth='xs'>
             <div className="runBook1">
@@ -136,7 +136,7 @@ function MSignIn() {
           </div>
           </Col>
           </Row>
-          </div>
+          {/* </div> */}
         </Container>
     </Col>
     </Row>

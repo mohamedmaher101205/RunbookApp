@@ -36,8 +36,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   bookIcon: {
-    height:'80px',
-    width:'100px',
     color:'white'
   }
 }));
@@ -73,10 +71,10 @@ function MSignUp() {
     </Snackbar>
     <Row>
       <Col sm={1}></Col>
-      <Col sm={7}>
+      <Col sm={9} xs={9} >
         <Container component="main" maxWidth="sm" className="loginContainer">
           <CssBaseline />
-          <div>
+          {/* <div> */}
           <Row>
           <Col sm={5}>
           <div className="runBook1">
@@ -161,7 +159,7 @@ function MSignUp() {
           </div>
           </Col>
           </Row>
-          </div>
+          {/* </div> */}
         </Container>
     </Col>
     </Row>
