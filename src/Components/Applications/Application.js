@@ -57,6 +57,7 @@ function Application(props){
     const[bookAdded,setBookAdded] = useState(false);
     const[drawerFlag,setDrawerFlag] = useState(false);
     const[book,setBook] = useState(null);
+    // const[butColor,setButColor] = useState("")
     
     // var filtered = [];
     var tempArr = [];
@@ -87,6 +88,7 @@ function Application(props){
 
     if(applications !== null && bookApps!==null){
          tempArr = bookApps.map(b=> b.appId);
+        //   setButColor('primary')
    }
     // const handleCheckbox = (value) => () => {
 
@@ -107,9 +109,13 @@ function Application(props){
         if(tempArr.includes(appId)){
             var index = tempArr.indexOf(appId);
             tempArr.splice(index,1);
+            // setButColor('default')
         }else{
             tempArr.push(appId);
+            // setButColor('primary')
+
         }
+
         console.log(tempArr);
       }
 
@@ -148,7 +154,8 @@ function Application(props){
             <Row className={classes.drawerContainer}>
                 {applications !== null && applications.map(app=>
                     <Button variant="contained" className={classes.Button} size="small" key={app.appId} 
-                    color={ (tempArr !== null && tempArr.includes(app.appId)) ? 'primary' : 'default'}
+                    color={ (tempArr !== null && tempArr.includes(app.appId)) ?'primary' : 'default'}
+                    // color = {tempArr!==null&& color}
                     onClick={()=>handleAppSelect(app.appId)}>
                         {app.applicationName}
                     </Button>

@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import ImportContactsOutlinedIcon from '@material-ui/icons/ImportContactsOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -16,12 +17,14 @@ import { Alert, Row, Col } from 'reactstrap';
 import { Redirect } from 'react-router';
 import './Login.css';
 
+
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    
   },
   avatar: {
     margin: theme.spacing(1),
@@ -33,8 +36,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+    margin: theme.spacing(2, 0, 2),
+  }
+   
 }));
 
 function MSignIn() {
@@ -63,14 +67,27 @@ function MSignIn() {
 
   return (
     sessionStorage.getItem('token') === null || typeof(sessionStorage.getItem('token')) === 'undefined' ?
+    <div className="app-bg">
     <Row>
-      <Col sm={2}></Col>
-      <Col sm={6}>
-        <Container component="main" maxWidth="xs" className="loginContainer" >
+      <Col sm={1}></Col>
+      
+      <Col sm={7}minwidth='xs'>
+        <Container component="main" minwidth ='xs' maxWidth="sm" className="loginContainer" >
           <CssBaseline />
-          <div className={classes.paper}>
+          <div>
+          <Row>
+          <Col sm={5}minwidth='xs'>
+            <div className="runBook1">
+              
+            <ImportContactsOutlinedIcon fontSize="large" minwidth='xs'  style={{color:'white'}} />
+            <h1 style={{color:'white'}} >RunBook</h1>
+            </div>
+          </Col>
+          <Col sm={7} minwidth='xs'>
+          <div className={classes.paper} minwidth='xs'>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
+              
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
@@ -117,9 +134,13 @@ function MSignIn() {
               </Grid>
             </form>
           </div>
+          </Col>
+          </Row>
+          </div>
         </Container>
     </Col>
     </Row>
+    </div>
     :
     <Redirect to='/dashboard' />
   );

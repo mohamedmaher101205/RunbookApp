@@ -41,11 +41,13 @@ function Book(props){
     useEffect(()=>{
         getAllStages(bookId,envId).then(res=>{
             setStages(res);
+            
         });
         getBookById(bookId).then(res=>{
             setBook(res);
         })  
     },[stageCreatedFlag, bookId, envId]);
+    // console.log(stages);
 
     useEffect(()=>{
         if(book !== null ){
@@ -70,6 +72,7 @@ function Book(props){
     }
 
     const changeEnv = (env) =>{
+        setStage(stages[0]);
         setOpenEnvMenu(null);
         setCurrentEnv(env);
         props.history.push(`/book/${bookId}/env/${env.envId}`);
@@ -128,9 +131,9 @@ function Book(props){
         </Row>
         <Row>
             <Col sm={12}>
-                <Tabs orientation="horizontal" value={tabValue} indicatorColor="primary" textColor="primary" onChange={handleTabChange}>
+                <Tabs orientation="horizontal" value={tabValue} indicatorColor="primary" textColor="primary"  onChange={handleTabChange}>
                     {stages !== null && stages.map(stage=>
-                        <Tab key={stage.stageId} label={stage.stageName} onClick={()=>setStage(stage)} />    
+                        <Tab key={stage.stageId} label={stage.stageName}  onClick={()=>setStage(stage)} />    
                     )}
                 </Tabs>
             </Col>

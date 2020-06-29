@@ -14,11 +14,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { registerUser } from '../../Services/api';
 import { Alert, Row, Col } from 'reactstrap';
 import { Snackbar } from '@material-ui/core';
+import ImportContactsOutlinedIcon from '@material-ui/icons/ImportContactsOutlined';
 
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -34,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  bookIcon: {
+    height:'80px',
+    width:'100px',
+    color:'white'
+  }
 }));
 
 
@@ -60,15 +66,26 @@ function MSignUp() {
   }
 
   return (
-    <>
+    <div className='app-bg'>
+    
     <Snackbar open={statusFlag} autoHideDuration={6000} anchorOrigin={{vertical:'bottom',horizontal:'right'}} onClose={handleRegisterStatusClose}>
     <Alert isOpen={statusFlag} toggle={handleRegisterStatusClose}> {registerStatus} </Alert>
     </Snackbar>
     <Row>
-      <Col sm={2}></Col>
-      <Col sm={6}>
-        <Container component="main" maxWidth="xs" className="loginContainer">
+      <Col sm={1}></Col>
+      <Col sm={7}>
+        <Container component="main" maxWidth="sm" className="loginContainer">
           <CssBaseline />
+          <div>
+          <Row>
+          <Col sm={5}>
+          <div className="runBook1">
+              
+              <ImportContactsOutlinedIcon fontSize="large"  className={classes.bookIcon} />
+              <h1 style={{color:'white'}} >RunBook</h1>
+          </div>
+          </Col>
+          <Col sm={7}>
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
@@ -142,10 +159,13 @@ function MSignUp() {
               </Grid>
             </form>
           </div>
+          </Col>
+          </Row>
+          </div>
         </Container>
     </Col>
     </Row>
-    </>
+    </div>
   );
 }
 

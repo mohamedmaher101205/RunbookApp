@@ -26,6 +26,8 @@ function Task(props){
             setTaskFormFlag(false);
         }
     },[taskCreated,stageId,env])
+    // console.log(envId)
+    
 
     const checkBoxBtnClick = (taskId,statusId) =>{
         const taskStarted = tasks.map(task=>task.taskId > 0);

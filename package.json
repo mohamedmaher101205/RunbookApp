@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "lint-staged": "^9.2.1",
+    "material-ui": "^0.20.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-error-boundary": "^1.2.5",
