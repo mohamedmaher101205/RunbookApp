@@ -17,16 +17,26 @@ function App() {
       </Row>
       <br />
       <Row>
-      <Col sm={2}>
-        {sessionStorage.getItem('token') !== null && typeof(sessionStorage.getItem('token')) !== 'undefined' ? 
-            <SideBar sidebarFlag={sidebarDrawer} sidebarFlagFunc={setSidebarDrawer} />
+      {sessionStorage.getItem('token') !== null && typeof(sessionStorage.getItem('token')) !== 'undefined' ? 
+        <>
+        <Col sm={2}>
+        
+          <SideBar sidebarFlag={sidebarDrawer} sidebarFlagFunc={setSidebarDrawer} />
+          </Col>
+          <Col sm={10} className="allcomp">
+          <Route />
+          </Col>
+          </>
           :
-          <></>
+          <>
+          <Col sm={12} className="allcomp">
+          <Route />
+          </Col>
+          </>
+        
         }
-        </Col>
-        <Col sm={10} className="allcomp">
-            <Route />
-        </Col>
+        
+        
       </Row>
     </Container>
     </>

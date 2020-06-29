@@ -1,6 +1,9 @@
 import React from 'react'
 import { Container} from 'reactstrap';
 import { Redirect } from 'react-router-dom';
+import './Welcome.css'
+
+
 
 function Welcome(props){
 
