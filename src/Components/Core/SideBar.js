@@ -64,7 +64,7 @@ export default function SideBar(props) {
       setTenant(res);
     })
   }
-  },[user, user.TenantId])
+  },[user.TenantId])
 
   useEffect(()=>{
     setSidebarFlag(props.sidebarFlag)
