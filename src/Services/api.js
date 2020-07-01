@@ -132,6 +132,8 @@ export const getGroupUsers = (groupId) => get(`/user/groupusers/${groupId}`);
 
 export const getTenant = (tenantId) => get(`/user/tenant/${tenantId}`);
 
+export const getEmail = (emailId) =>get(`/user/sendemail/${emailId}`);
+
 export const createCustomEnvironment = (env,tenantId) => post(`/user/customenvironments/${tenantId}`,env);
 
 export const createCustomApplicationType = (appType,tenantId) => post(`/application/createapptype/${tenantId}`,appType);
