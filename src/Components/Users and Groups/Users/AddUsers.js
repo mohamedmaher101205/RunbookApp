@@ -7,6 +7,7 @@ import { grey } from '@material-ui/core/colors';
 import { Row, Col } from 'reactstrap';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
+import { getEmail } from '../../../Services/api';
 
 const drawerWidth = 430;
 
@@ -65,6 +66,7 @@ function AddUsers(props){
     }
 
     const AddUsers = () =>{
+        getEmail(searchKey);
         props.setDrawerFlag(false);
         setDrawerFlag(false);
     }
