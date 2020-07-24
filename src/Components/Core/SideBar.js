@@ -59,7 +59,7 @@ export default function SideBar(props) {
   },[user, user.TenantId])
 
   useEffect(()=>{
-    if(user !== null){
+    if(user.TenantId !== undefined){
     getTenant(user.TenantId).then(res=>{
       setTenant(res);
     })

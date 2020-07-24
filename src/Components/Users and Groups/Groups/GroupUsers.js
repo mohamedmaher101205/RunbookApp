@@ -5,8 +5,13 @@ import AddGroupUsers from './AddGroupUsers';
 import { getGroupUsers } from '../../../Services/api';
 import { Row, Col } from 'reactstrap';
 import './GroupUsers.css';
+var jwt = require('jsonwebtoken');
 
 function GroupUsers(props){
+
+    var token = sessionStorage.getItem('token');
+
+    var user = jwt.decode(token);
 
     const[groupUsers,setGroupUsers] = useState(null);
     const[groupUserDrawer,setGroupUserDrawer] = useState(false);
@@ -48,9 +53,11 @@ function GroupUsers(props){
             </Row>
             <Row>
                 <Col sm={2}>
+                {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
                     <Button color="primary" variant="contained" size="small" startIcon={<AddIcon />} onClick={()=>setGroupUserDrawer(true)}>
                         Add User
                     </Button>
+                }
                 </Col>
             </Row>
             </> 

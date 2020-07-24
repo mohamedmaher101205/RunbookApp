@@ -1,0 +1,27 @@
+.bg-container{
+    background-image: url(./../something-wrong.png);
+    background-repeat: no-repeat;
+    float: left;
+    width: 30%;
+}
+
+.oops{
+    font-size: 100px;
+    color: grey;
+}
+
+.err-message{
+    color: grey;
+}
+
+.error-container{
+    padding-top: 70px;
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.msg-container{
+    padding-top: 80px;
+    float: right;
+}

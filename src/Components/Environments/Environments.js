@@ -5,9 +5,12 @@ import { Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper
 import { Row, Col } from 'reactstrap';
 import AddIcon from '@material-ui/icons/Add';
 import EnvironmentForm from './EnvironmentForm';
+var jwt = require('jsonwebtoken');
 
 function EnvironmentsTable(props){
     var tenantId = sessionStorage.getItem('TenantId');
+    var token = sessionStorage.getItem('token');
+    var user = jwt.decode(token);
     const [environments,setEnvironments] = useState(null);
     const [envDrawerFlag,setEnvDrawerFlag] = useState(false);
 
@@ -38,14 +41,16 @@ function EnvironmentsTable(props){
     <Row>
         <Col sm={9}></Col>
         <Col sm={3}>
-            <Button variant="contained" style={{float:"right"}} color="primary" size="medium" startIcon={<AddIcon />} onClick={()=>setEnvDrawerFlag(true)}>
-                Add Environment
-            </Button>
+            {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
+                <Button variant="contained" style={{float:"right"}} color="primary" size="medium" startIcon={<AddIcon />} onClick={()=>setEnvDrawerFlag(true)}>
+                    Add Environment
+                </Button>
+            }
         </Col>
         <EnvironmentForm drawerFlag={envDrawerFlag} setDrawerFlag={setEnvDrawerFlag} />
     </Row>
     <Row>
-        <Col>
+        <Col sm={12}>
             <TableContainer component={Paper} className={classes.table}>
                 <Table size="small" >
                     <TableHead>

@@ -3,8 +3,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { createTask } from '../../../../Services/api';
 import { Table, TableBody, TableCell, TextField,Button as MButton, TableRow } from '@material-ui/core';
 
+var jwt = require('jsonwebtoken');
+
 function TaskForm(props){
 
+    var token = sessionStorage.getItem('token');
+    var user = jwt.decode(token);
     const {register,handleSubmit,reset,control,errors} = useForm();
     //const [statuses,setStatuses] = useState(null);
 
@@ -23,13 +27,9 @@ function TaskForm(props){
         reset({TaskName : '', Description : ''});
     }
 
-    // useEffect(()=>{
-    //     getStatuses().then(res=>{
-    //         setStatuses(res);
-    //     })
-    // },[stageId])
 
     return <>
+    {(user.Permissions.includes("Create") || user.Permissions.includes("Update") || user.IsAdmin.toLowerCase() === 'true') &&
     <form onSubmit={handleSubmit(taskFormData)}>
     <Table>
         <TableBody>
@@ -65,50 +65,7 @@ function TaskForm(props){
         </TableBody>
     </Table>
     </form>
-    {/* <Card>
-         <h3><CardText>Create Task</CardText></h3> 
-        <CardBody>
-            <form onSubmit={handleSubmit(taskFormData)} >
-                <Row>
-                    <Col xs={2}>
-                        <input type="text" placeholder="Task" name="TaskName" ref={register} />
-                    </Col>
-
-                    <Col xs={2}>
-                        <input type="textarea" placeholder="Description" name="Description" ref={register} />
-                    </Col>
-
-                    <Col xs={3}>
-                        <input type="date" placeholder="Targeted date" name="CompletedByDate" ref={register} />
-                    </Col>
-
-                    <Col xs={2}>
-                        <input type="text" placeholder="Assigned To" name="AssignedTo" ref={register} />
-                    </Col>
-
-                    {/* <Col xs={3}>
-                        <select type="number" name="statusId" placeholder="Status" ref={unregister} >
-                            {statuses !== null ?
-                             statuses.map(status=>
-                                <option key={status.statusId} value={status.statusId}> {status.description}</option>
-                            )
-                            :
-                            <option>Loading status</option>
-                            } 
-                        </select>
-                    </Col> */}
-                {/*</Row>
-                <Row>
-                    <Col xs={2}>
-                        <Button outline color="primary">Create</Button>
-                    </Col>
-                    <Col>
-                        <Button outline color="danger" onClick={()=>props.showForm(false)}>Cancel</Button>
-                    </Col>
-                </Row>
-            </form>
-        </CardBody>
-    </Card> */}
+    }
     </>
 }
 
