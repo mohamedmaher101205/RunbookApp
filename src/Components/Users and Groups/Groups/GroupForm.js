@@ -4,8 +4,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { grey } from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
-import { makeStyles, SwipeableDrawer, IconButton, TextField, Button } from '@material-ui/core';
-import { createGroup } from '../../../Services/api';
+import { makeStyles, SwipeableDrawer, IconButton, TextField, Button,Select, MenuItem, FormControl, InputLabel, Input, Chip } from '@material-ui/core';
+import { createGroup, getPermissions } from '../../../Services/api';
 
 const drawerWidth = 430;
 
@@ -45,26 +45,36 @@ function GroupForm(props){
     const classes = useStyles();
     const {register,handleSubmit,reset,control,errors} = useForm();
     const[drawerFlag,setDrawerFlag] = useState(false);
+    const[permissions,setPermissions] = useState(null);
+    const[selectedPermission,setSelectedPermission] = useState([]);
     const tenantId = props.tenantId;
 
     const GroupFormData = (data) =>{
-        console.log(data);
+        data.PermissionIds = selectedPermission.map(permissions => {return permissions.permissionId});
         createGroup(tenantId,data).then(res=>{
             console.log(res);
             props.setGroupDrawer(false);
         })
+        setSelectedPermission([]);
         reset();
     }
 
     const closeDrawer = () =>{
         setDrawerFlag(false);
+        setSelectedPermission([]);
         props.setGroupDrawer(false);
     }
 
     useEffect(()=>{
         setDrawerFlag(props.groupDrawerFlag);
+        getPermissions().then(res=>{
+            setPermissions(res);
+        })
     },[props.groupDrawerFlag])
 
+    const handleSelectPermission = (event) =>{
+        setSelectedPermission(event.target.value);
+    }
 
     return <>
         <SwipeableDrawer className={classes.drawer} classes={{paper:classes.drawerPaper}} onOpen={()=>setDrawerFlag(true)} open={drawerFlag} anchor="right" onClose={closeDrawer}>
@@ -107,6 +117,27 @@ function GroupForm(props){
                 helperText={errors.Description && "Description is required"}
                 />
             } control={control} name="Description" defaultValue="" rules={{required:true}}
+            />
+        </Row>
+        <Row className={classes.drawerContainer}>
+            <Controller as={
+            <FormControl variant="outlined" fullWidth >
+                <InputLabel>Permissions</InputLabel>
+                <Select multiple onChange={handleSelectPermission} value={selectedPermission} 
+                    name="PermissionId"
+                    renderValue={(selected)=>
+                    selected.map(value=><Chip key={value.permissionId} label={value.permission} />)
+                    } input={<Input id="select-multiple-chip" />} 
+                    error={errors.PermissionId && errors.PermissionId.type === 'required'}
+                    helperText={errors.PermissionId && "Permissions are required required"} >
+                    {permissions !== null &&
+                    permissions.map(permission=>
+                        <MenuItem key={permission.permissionId} value={permission}> {permission.permission} </MenuItem>
+                    )
+                    }
+                </Select>
+            </FormControl>
+            } control={control} name="PermissionId" defaultValue={[]} rules={({required:true})}
             />
         </Row>
         <Row className={classes.drawerContainer}>

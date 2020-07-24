@@ -53,7 +53,7 @@ function MSignUp() {
 
     registerUser(user).then(res=>{
         console.log(res);
-        setRegisterStatus('User registered successfully');
+        setRegisterStatus(res);
         setStatusFlag(true);
     })
     reset();

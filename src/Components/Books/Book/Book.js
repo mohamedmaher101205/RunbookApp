@@ -10,6 +10,8 @@ import { Button as MButton, Menu, MenuItem, Typography, Tabs, Tab, Badge, makeSt
 import AddIcon from '@material-ui/icons/Add';
 import {ExpandLess,ExpandMore} from '@material-ui/icons';
 
+var jwt = require('jsonwebtoken');
+
 const useStyles = makeStyles((theme) => ({
     Badge:{
         margin : theme.spacing(3.5),
@@ -17,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Book(props){
+
+    var token = sessionStorage.getItem('token');
+    var user = jwt.decode(token);
 
     const classes = useStyles();
 
@@ -116,6 +121,7 @@ function Book(props){
                         )}
                     </Menu>
             </Col>
+            {(user.Permissions.includes("Create") || user.Permissions.includes("Update") || (user.IsAdmin.toLowerCase() === 'true')) && <>
             <Col sm={2}>
                 <Application bookId={bookId} drawerFlag={applicationDrawer} setDrawerFlag={setApplicationDrawer} />
                 <MButton variant="contained" style={{float:"right"}} size="medium" color="primary" startIcon={<AddIcon /> } onClick={()=>setApplicationDrawer(true)}>
@@ -128,6 +134,8 @@ function Book(props){
                     Add Stage
                 </MButton>
             </Col>
+            </>
+            }
         </Row>
         <Row>
             <Col sm={12}>

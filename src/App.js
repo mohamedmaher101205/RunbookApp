@@ -35,8 +35,6 @@ function App() {
           </>
         
         }
-        
-        
       </Row>
     </Container>
     </>

@@ -59,6 +59,10 @@ const post = (url,data) => {
     })
 }
 
+const loginPost = (url,data) =>{
+    return axios.post(url,data);
+}
+
 const put = (url) => {
     return axios.put(url).then(res=>{
         if(res.status === 200){
@@ -79,6 +83,8 @@ const put = (url) => {
 }
 
 export const registerUser = user => post(`auth/register`,user);
+
+export const login = user => loginPost(`auth/login`, user);
 
 export const CreateBook = (book) => post(`book/createbook`,book);
 
@@ -116,11 +122,7 @@ export const updateBookByEnvironment = (bookId,envId,statusId) => get(`/book/upd
 
 export const deleteTaskInAllEnvs = (bookId,taskName) => put(`/book/deletetask/${bookId}/${taskName}`);
 
-export const getAllUsers = () => get(`/book/users`);
-
-export const LinkUsers = (tenantId,userIds) => post(`/user/addusers/${tenantId}/${userIds}`);
-
-export const getLinkedUsers = (tenantId) => get(`/user/linkedusers/${tenantId}`);
+export const getAllUsers = (tenantId) => get(`/user/users/${tenantId}`);
 
 export const createGroup = (tenantId,group) => post(`/user/group/${tenantId}`,group);
 
@@ -145,3 +147,7 @@ export const getResourceTypes = (tenantId) => get(`/application/resourcetypes/${
 export const createResource = (resource,tenantId) => post(`/application/createresource/${tenantId}`,resource);
 
 export const getResources = (tenantId) => get(`/application/resources/${tenantId}`);
+
+export const getPermissions = () => get('/user/permissions');
+
+export const updateTask = (taskId,task) => post(`book/updatetask/${taskId}`,task);

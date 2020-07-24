@@ -34,9 +34,11 @@ return <>
     <Row>
         <Col sm={10}></Col>
         <Col sm={2}>
+            {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
             <MButton variant="contained" style={{float:"right"}} size="medium" color="primary" startIcon={<AddIcon /> } onClick={()=>setDrawerFlag(true)}>
                 Add Book
             </MButton>
+            }
         </Col>
         <BookForm isBookCreated={setBookCreated} setDrawerFlag={setDrawerFlag} drawerFlag={drawerFlag} />
     </Row>

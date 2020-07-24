@@ -5,8 +5,13 @@ import AddIcon from '@material-ui/icons/Add';
 import GroupForm from './GroupForm';
 import { getTenantGroups } from '../../../Services/api';
 import GroupUsers from './GroupUsers';
+var jwt = require('jsonwebtoken');
 
 function Group(props){
+    var token = sessionStorage.getItem('token');
+
+    var user = jwt.decode(token);
+
     var tenantId = sessionStorage.getItem('TenantId');
     const[groupDrawer,setGroupDrawer] = useState(false);
     const[groups,setGroups] = useState(null);
@@ -23,23 +28,25 @@ function Group(props){
         })
         setGroup(null);
     },[groupDrawer, tenantId])
-
+    
     return<>
         <Row>
             <Col sm={10}>
                 <GroupForm tenantId={tenantId} groupDrawerFlag={groupDrawer} setGroupDrawer={setGroupDrawer} />
             </Col>
             <Col sm={2}>
+                {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
                 <Button variant="contained" style={{float:"right"}} size="medium" color="primary" startIcon={<AddIcon /> } onClick={()=>setGroupDrawer(true)}>
                     Create Group
                 </Button>
+                }
             </Col>
         </Row>
         <Row>
             <Col sm={12}>
                 <Tabs orientation="horizontal" value={tabValue} indicatorColor="primary" textColor="primary" onChange={handleTabChange}>
                     {groups !== null && groups.map(group=>
-                        <Tab key={group.groupId} label={group.groupName} onClick={()=>setGroup(group)} />
+                        <Tab disableTouchRipple key={group.groupId} label={group.groupName} onClick={()=>setGroup(group)} />
                     )
                     }
                 </Tabs>

@@ -12,10 +12,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {googleQueryParams} from '../Authentication/GoogleAuthentication/AuthConfig';
 import { useForm, Controller } from 'react-hook-form';
-import axios from 'axios';
 import { Alert, Row, Col } from 'reactstrap';
 import { Redirect } from 'react-router';
 import './Login.css';
+import { CircularProgress } from '@material-ui/core';
+import { login } from '../../Services/api';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +38,12 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(2, 0, 2),
+  },  
+  buttonProgress: {
+    position: 'absolute',
+    left: '50%',
+    marginTop: 17,
+    marginLeft: -12,
   }
    
 }));
@@ -47,22 +54,24 @@ function MSignIn() {
   const {register,handleSubmit,reset,control,errors} = useForm();
   const [httpStatus, SetHttpStatus] = useState('');
   const [isLoginFail,setisLoginFail] = useState(false);
-
+  const [loader,setLoader] = useState(false);
 
   const SubmitSignIn = (data) =>{
-      axios.post(`${process.env.REACT_APP_API_BASE_URL}auth/login`, data).then(res => {
+    setLoader(true);
+      login(data).then(res => {
         if (res.status === 200) {
-            SetHttpStatus('');
-            sessionStorage.setItem('token', res.data.token);
             window.location.href = '/dashboard';
-            //props.onHistory.push('/dashboard');
-        }
+            SetHttpStatus('');
+            setLoader(false);
+            reset();
+            sessionStorage.setItem('token', res.data.token);
+          }
     }).catch(error => {
             if(error)
-            SetHttpStatus('Invalid user email or password')
+            SetHttpStatus('Invalid user email or password');
+            setLoader(false);
             setisLoginFail(true);
     });
-      reset();
   }
 
   return (
@@ -117,9 +126,11 @@ function MSignIn() {
                 helperText={errors.Password && "Password is required"}
               />} control={control} name="Password"  rules={{required:true}} defaultValue=""
               />
-              <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-                Sign In
-              </Button>
+                <Button type="submit" fullWidth disabled={loader} variant="contained" color="primary" className={classes.submit}>
+                  Sign In
+                </Button>
+                {loader && <CircularProgress size={24} className={classes.buttonProgress} /> }
+
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
