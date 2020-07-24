@@ -44,7 +44,7 @@
     "eslint": "npm run lint"
   },
   "engines": {
-    "node": "11.0"
+    "node": "12.18.0"
   },
   "jest": {
     "collectCoverageFrom": [
