@@ -32,7 +32,8 @@ const useStyles = makeStyles (() => ({
         fontWeight: 'light',
     },
     drawerContainer:{
-        margin: 10
+        margin: 10,
+        padding : 5
     },
     paper : {
         height : 350,

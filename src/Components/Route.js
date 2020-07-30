@@ -47,7 +47,7 @@ return <>
 
             return (<>
               {sessionStorage.getItem('token') !== null &&
-              <Breadcrumbs aria-label="breadcrumb">
+              <Breadcrumbs aria-label="breadcrumb" style={{paddingLeft: "15px"}}>
                 
                 <LinkRouter color="inherit" to="/dashboard">
                   {tenant !== null  && tenant.tenantName}

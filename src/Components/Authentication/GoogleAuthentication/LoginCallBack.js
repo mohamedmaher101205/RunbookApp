@@ -72,7 +72,6 @@ function LoginCallback(props){
     [getUser]);
 
     useEffect(()=>{
-        console.log('called, token => ',token)
         if(sessionStorage.getItem('token') !== null){
             window.location.href='/dashboard';
         }

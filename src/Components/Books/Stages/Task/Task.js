@@ -25,6 +25,7 @@ function Task(props){
     const [taskFormFlag,setTaskFormFlag] = useState(false);
     const [taskCreated,setTaskCreated] = useState(false);
     const [editMode,setEditMode] = useState(false);
+    const [taskDeleted,setTaskDeleted] = useState(false);
     const [editableTaskId,setEditableTaskId] = useState(0);
     const [updatedTask,setUpdatedTask] = useState({});
 
@@ -35,7 +36,7 @@ function Task(props){
         if(taskCreated){
             setTaskFormFlag(false);
         }
-    },[taskCreated,stageId,env])
+    },[taskCreated,stageId,env,taskDeleted])
     // console.log(envId)
     
 
@@ -94,9 +95,12 @@ function Task(props){
 
     const deleteTask = (taskName) =>{
         setTaskCreated(false);
+        
         deleteTaskInAllEnvs(bookId,taskName).then(res=>{
+            setTaskDeleted(true);
             console.log(res);
-        })
+        });
+        setTaskDeleted(false);
     }
 
     const editTask = (taskId) => {

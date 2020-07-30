@@ -91,7 +91,7 @@ function MSignUp() {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography><br/>
-            <Button variant="outlined" fullWidth href={`${process.env.REACT_APP_GOOGLE_AUTH_URL}?${googleQueryParams}`} color="primary">
+            <Button variant="outlined" disabled={true} fullWidth href={`${process.env.REACT_APP_GOOGLE_AUTH_URL}?${googleQueryParams}`} color="primary">
                 Sign Up with Google
             </Button><br />
             <p>OR</p> 
