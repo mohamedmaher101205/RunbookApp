@@ -7,9 +7,7 @@ import { grey } from '@material-ui/core/colors';
 import { Row, Col } from 'reactstrap';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
-
 import { getAllUsers, addUsersToGroups } from '../../../Services/api';
-
 
 const drawerWidth = 430;
 
@@ -34,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'light',
     },
     drawerContainer:{
-        margin: 10
+        margin: 10,
+        padding : 5
     },
     paper : {
         height : 350,
@@ -83,10 +82,8 @@ function AddGroupUsers(props){
     }
 
     const AddUsers = () =>{
-
         var ids = selectedUsers.map(user => {return user.userId})
         addUsersToGroups(group.groupId,ids).then(res=>console.log(res));
-
         props.setDrawerFlag(false);
         setDrawerFlag(false);
     }

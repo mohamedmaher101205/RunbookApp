@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Route from './Components/Route';
 import MHeader from './Components/Core/Header';
-import { Row, Col, Container } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import SideBar from './Components/Core/SideBar';
 import './App.css'
  
@@ -11,12 +11,12 @@ function App() {
 
   return (
     <>
-    <Container fluid={true} data-test='app-component'>
+    <div data-test='app-component' className="app-component">
       <Row>
         <MHeader sidebarFlagFunc={setSidebarDrawer} />
       </Row>
       <br />
-      <Row>
+      <Row className="main-component">
       {sessionStorage.getItem('token') !== null && typeof(sessionStorage.getItem('token')) !== 'undefined' ? 
         <>
         <Col sm={2}>
@@ -36,7 +36,7 @@ function App() {
         
         }
       </Row>
-    </Container>
+    </div>
     </>
   );
 }
