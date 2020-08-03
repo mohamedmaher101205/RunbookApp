@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {googleQueryParams} from '../Authentication/GoogleAuthentication/AuthConfig';
 import { useForm, Controller } from 'react-hook-form';
-import { registerUser } from '../../Services/api';
+import { registerUser, login } from '../../Services/api';
 import { Alert, Row, Col } from 'reactstrap';
 import { Snackbar } from '@material-ui/core';
 import ImportContactsOutlinedIcon from '@material-ui/icons/ImportContactsOutlined';
@@ -47,14 +47,22 @@ function MSignUp() {
   const {handleSubmit,register,reset,control,errors} = useForm();
   const [registerStatus,setRegisterStatus] = useState(null);
   const [statusFlag,setStatusFlag] = useState(false);
+  const [user,setUser] = useState(null);
 
   const submitSignUp = (user) =>{
     //console.log(user)
-
+    setUser(user);
     registerUser(user).then(res=>{
-        console.log(res);
-        setRegisterStatus(res);
+        setRegisterStatus(res.data);
         setStatusFlag(true);
+        if(user !== null && res.status === 200){
+          login(user).then(res=>{
+            if(res.status === 200){
+              window.location.href = '/dashboard';
+              sessionStorage.setItem('token', res.data.token);
+            }
+          })
+        }
     })
     reset();
 }

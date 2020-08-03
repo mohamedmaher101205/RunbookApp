@@ -59,7 +59,7 @@ const post = (url,data) => {
     })
 }
 
-const loginPost = (url,data) =>{
+const authPost = (url,data) =>{
     return axios.post(url,data);
 }
 
@@ -101,9 +101,9 @@ const httpdelete = (url) => {
     });
 }
 
-export const registerUser = user => post(`auth/register`,user);
+export const registerUser = user => authPost(`auth/Register`,user);
 
-export const login = user => loginPost(`auth/Login`, user);
+export const login = user => authPost(`auth/Login`, user);
 
 export const CreateBook = (book) => post(`book/CreateBook`,book);
 
