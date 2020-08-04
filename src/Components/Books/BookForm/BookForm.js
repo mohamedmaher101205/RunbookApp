@@ -8,6 +8,7 @@ import { Select, Chip, MenuItem, Input,
 import { grey } from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
+var jwt = require('jsonwebtoken');
 
 const drawerWidth = 430;
 
@@ -51,12 +52,17 @@ function BookForm(props){
    const[environments,setEnvironments] = useState(null);
    const[selectedEnvs,setSelectedEnvs] = useState([]);
    const[drawerFlag,setDrawerFlag] = useState(false);
+   
+   var token = sessionStorage.getItem('token');
+   var user = jwt.decode(token);
 
     const bookFormData = (data) =>{
         console.log(data);
         const ids = selectedEnvs.map(env=> {return {EnvId : env.envId}});
         //console.log(ids);
         data.Environments = ids;
+        data.UserId = Number(user.UserId);
+        data.TenantId = Number(tenantId);
         props.isBookCreated(false);
         CreateBook(data).then(res=>{
             console.log(res);
