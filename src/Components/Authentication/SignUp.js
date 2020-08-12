@@ -63,6 +63,11 @@ function MSignUp() {
             }
           })
         }
+    }).catch(err => {
+      if(err.response.status === 409){
+        setRegisterStatus(err.response.data);
+        setStatusFlag(true);
+      }
     })
     reset();
 }
