@@ -119,7 +119,7 @@ export const createTask = (task,bookId) => post(`task/CreateTask/${bookId}`,task
 
 export const getAllTasks = stageId => get(`task/GetTasks/${stageId}`);
 
-export const getStatuses = () => get(`book/GetStatuses`);
+export const getStatuses = (tenantId) => get(`book/GetStatuses/${tenantId}`);
 
 export const updateTasksStatus = (ids,statusId) => put(`task/UpdateTasks/${ids}/${statusId}`);
 
