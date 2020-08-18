@@ -142,10 +142,7 @@ return <>
                             <TableCell>Completion Date</TableCell>
                             <TableCell>Release note</TableCell>
                             <TableCell>Status</TableCell>
-                            {(user.Permissions.includes("Update") ||
-                                user.Permissions.includes("Delete") || user.IsAdmin.toLowerCase() === 'true') &&
-                                <TableCell>Actions</TableCell>
-                            }
+                            <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -182,12 +179,9 @@ return <>
                                     </Button>
                                 </TableCell>
                                 <TableCell>
-                                {(user.Permissions.includes("Delete") || user.IsAdmin.toLowerCase() === 'true') &&
                                     <IconButton onClick={()=>deleteTask(task.taskName)}>
                                         <DeleteIcon />
                                     </IconButton>
-                                }
-                                {(user.Permissions.includes("Update") || user.IsAdmin.toLowerCase() === 'true') &&
                                     <>
                                     {editMode && editableTaskId === task.taskId ?
                                     <>
@@ -204,7 +198,6 @@ return <>
                                     </IconButton>
                                     }
                                     </>
-                                }
                                 </TableCell>
                             </TableRow>    
                         )}
@@ -215,11 +208,9 @@ return <>
                 </TableContainer>
                 
                 </Row><br />
-                {(user.Permissions.includes("Create") || user.Permissions.includes("Update") || user.IsAdmin.toLowerCase() === 'true') &&
                     <Row>
                         <MButton color="primary" variant="contained" onClick={completeStage} >Complete Stage</MButton>
                     </Row>
-                }
                 </>
             :
             <>
@@ -228,12 +219,10 @@ return <>
                     <TaskForm stage={stage} bookId={bookId} taskCreated={setTaskCreated} showForm={setTaskFormFlag} /> 
                 : 
                 <>  
-                {(user.Permissions.includes("Create") || user.Permissions.includes("Update") ||user.IsAdmin.toLowerCase() === 'true') && stageId !== 0 &&
                     <Button color="link" onClick={()=>setTaskFormFlag(!taskFormFlag)}>
                         <FontAwesomeIcon icon={faPlus} />{' '}
                         Create Task
                     </Button>
-                }
                 </>
                 }
             </Row>

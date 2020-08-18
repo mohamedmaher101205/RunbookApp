@@ -13,9 +13,8 @@ import {Link as LinkRouter} from 'react-router-dom';
 import EnvironmentsTable from './Environments/Environments';
 import MSignIn from './Authentication/SignIn';
 import MSignUp from './Authentication/SignUp';
-import Users from './Users and Groups/Users/Users';
-import Group from './Users and Groups/Groups/Group';
 import { getTenant } from '../Services/api';
+import Teams from './Teams/Teams';
 
 function RouteComponent(props){
 
@@ -121,12 +120,8 @@ return <>
             <EnvironmentsTable />
           )} />
 
-          <Route path='/users' render={()=>(
-            <Users />
-          )} />
-
-          <Route path="/group" render={()=>(
-            <Group />
+          <Route path="/teamdashboard" render={()=>(
+            <Teams />
           )} />
 
         </Switch>
