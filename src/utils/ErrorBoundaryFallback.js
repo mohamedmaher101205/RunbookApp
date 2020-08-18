@@ -5,7 +5,7 @@ import { Button } from "@material-ui/core";
 const ErrorBoundaryFallback = ({componentStack,error}) => {
 
     const handleGoBack = () => {
-        window.location.href = '/bookdashboard';
+        window.location.href = '/dashboard';
     }
 
     return <>

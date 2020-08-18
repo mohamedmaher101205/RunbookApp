@@ -55,6 +55,10 @@ const post = (url,data) => {
         if(typeof(error.response) !== 'undefined' && error.response.status === 401){
             logout();
         }
+        if(error.response.status === 409){
+            console.log("Duplicate in api")
+            return error;
+        }
         return `Error posting data to url :${url}, Error:${error}`
     })
 }
@@ -143,13 +147,13 @@ export const deleteTaskInAllEnvs = (bookId,taskName) => httpdelete(`task/DeleteT
 
 export const getAllUsers = (tenantId) => get(`user/GetUsers/${tenantId}`);
 
-export const createGroup = (tenantId,group) => post(`group/CreateGroup/${tenantId}`,group);
+// export const createGroup = (tenantId,group) => post(`group/CreateGroup/${tenantId}`,group);
 
-export const getTenantGroups = (tenantId) => get(`group/GetGroups/${tenantId}`);
+// export const getTenantGroups = (tenantId) => get(`group/GetGroups/${tenantId}`);
 
-export const addUsersToGroups = (groupId,userIds) => post(`group/AddGroupUsers/${groupId}/${userIds}`);
+// export const addUsersToGroups = (groupId,userIds) => post(`group/AddGroupUsers/${groupId}/${userIds}`);
 
-export const getGroupUsers = (groupId) => get(`group/GetGroupUsers/${groupId}`);
+// export const getGroupUsers = (groupId) => get(`group/GetGroupUsers/${groupId}`);
 
 export const getTenant = (tenantId) => get(`user/GetTenant/${tenantId}`);
 
@@ -167,6 +171,10 @@ export const createResource = (resource,tenantId) => post(`resource/CreateResour
 
 export const getResources = (tenantId) => get(`resource/GetResources/${tenantId}`);
 
-export const getPermissions = () => get('group/GetPermissions');
+// export const getPermissions = () => get('group/GetPermissions');
 
 export const updateTask = (taskId,task) => post(`task/UpdateTask/${taskId}`,task);
+
+export const createTeam = (team) => post(`team/CreateTeam`,team);
+
+export const getAllTeams = (tenantId) => get(`team/GetTeams/${tenantId}`);
