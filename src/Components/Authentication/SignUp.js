@@ -157,6 +157,39 @@ function MSignUp() {
                     rules={{required:true}}
                     />
                 </Grid>
+                <Grid item xs={12}>
+                    <Controller as={
+                        <TextField variant="outlined" required fullWidth id="Designation" label="Designation" name="UserDesignation" autoComplete="Designation" 
+                        error={errors.UserDesignation && errors.UserDesignation.type === 'required'} helperText={errors.UserDesignation && "Designation is required"} ref={register} />
+                    }
+                    control={control}
+                    name="UserDesignation"
+                    defaultValue=""
+                    rules={{required:true}}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Controller as={
+                        <TextField variant="outlined" required fullWidth id="Organization" label="Organization" name="UserOrganization" autoComplete="Organization" 
+                        error={errors.UserOrganization && errors.UserOrganization.type === 'required'} helperText={errors.UserOrganization && "Organization is required"} ref={register} />
+                    }
+                    control={control}
+                    name="UserOrganization"
+                    defaultValue=""
+                    rules={{required:true}}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Controller as={
+                        <TextField variant="outlined" required fullWidth id="Phone" label="Phone" name="Phone" autoComplete="Phone" 
+                        error={errors.Phone && errors.Phone.type === 'required'} helperText={errors.Phone && "Phone is required"} ref={register} />
+                    }
+                    control={control}
+                    name="Phone"
+                    defaultValue=""
+                    rules={{required:true}}
+                    />
+                </Grid>
               </Grid>
               <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                 Sign Up
