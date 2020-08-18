@@ -9,6 +9,7 @@ import Application from '../../Applications/Application';
 import { Button as MButton, Menu, MenuItem, Typography, Tabs, Tab, Badge, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import {ExpandLess,ExpandMore} from '@material-ui/icons';
+import AddUsers from '../../Users and Groups/Users/AddUsers';
 
 var jwt = require('jsonwebtoken');
 
@@ -32,6 +33,7 @@ function Book(props){
 
     const [stages,setStages] =useState(null);
     const [stageDrawerFlag,setStageDrawerFlag] = useState(false);
+    const [drawerFlagAddUser,setDrawerFlagAddUser] = useState(false);
     const [stageCreatedFlag,setStageCreated] = useState(false);
     const [stage,setStage] = useState(null);
     const [book,setBook] = useState(null);
@@ -41,6 +43,7 @@ function Book(props){
     const [tabValue,setTabValue] = useState(0);
     const [bookapplications,setBookApplications] = useState(null);
     const [cuurentEnv,setCurrentEnv] = useState(null);
+    const [rolelevel,setrolelevel] = useState(null);
     // const [environments,setEnvironments] = useState(null);
  
     useEffect(()=>{
@@ -93,7 +96,7 @@ function Book(props){
 
     return <>
         <Row>
-            <Col sm={6}>
+            <Col sm={4}>
                 <Typography color="textPrimary" component="h4" variant="h5">
                     {book !== null && book.bookName} 
                  </Typography>
@@ -104,7 +107,7 @@ function Book(props){
             </Col>
         </Row>
         <Row>
-            <Col sm={6} >
+            <Col sm={4} >
                 {bookapplications !== null && bookapplications.map(app=>
                     <Badge className={classes.Badge} badgeContent={app.applicationName} color="primary" key={app.appId} />
                 )}
@@ -122,6 +125,25 @@ function Book(props){
                     </Menu>
             </Col>
             {(user.Permissions.includes("Create") || user.Permissions.includes("Update") || (user.IsAdmin.toLowerCase() === 'true')) && <>
+            <Col sm={2}>
+            
+            
+                <AddUsers rolelevel="Team" drawerFlag={drawerFlagAddUser} setDrawerFlag={setDrawerFlagAddUser} />
+           
+         
+                {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
+       
+                <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setDrawerFlagAddUser(!drawerFlagAddUser,rolelevel)} >
+                    Add User
+                </Button>
+}
+                
+       
+
+            
+            </Col>
+            
+            
             <Col sm={2}>
                 <Application bookId={bookId} drawerFlag={applicationDrawer} setDrawerFlag={setApplicationDrawer} />
                 <MButton variant="contained" style={{float:"right"}} size="medium" color="primary" startIcon={<AddIcon /> } onClick={()=>setApplicationDrawer(true)}>

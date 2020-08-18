@@ -56,9 +56,26 @@ function MSignUp() {
         setRegisterStatus(res.data);
         setStatusFlag(true);
         if(user !== null && res.status === 200){
+          var inviteUrlDetails = null;
+          var inviteRoleLevelDetails =  null;
+          var getUserDetails = res.data[0];
+          if(getUserDetails !== undefined)
+          {
+            inviteUrlDetails =  getUserDetails.inviteUrl;
+            inviteRoleLevelDetails = getUserDetails.inviteRoleLevel;
+          }
+         
           login(user).then(res=>{
             if(res.status === 200){
+              if(inviteUrlDetails==null)
+              {
               window.location.href = '/dashboard';
+              }
+                else
+                {
+                window.location.href = inviteUrlDetails;
+                }
+
               sessionStorage.setItem('token', res.data.token);
             }
           })
