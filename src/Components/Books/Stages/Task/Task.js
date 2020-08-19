@@ -193,20 +193,20 @@ return <>
                                 <AddUsers rolelevel="Task" drawerFlag={drawerFlagAddUser} setDrawerFlag={setDrawerFlagAddUser} />
             
            
-                {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
+ 
        
                 <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setDrawerFlagAddUser(!drawerFlagAddUser,rolelevel)} >
                     Add User
                 </Button>
-}
                                 </TableCell>
 
                                 <TableCell>
                                 {(user.Permissions.includes("Delete") || user.IsAdmin.toLowerCase() === 'true') &&
-                                    <IconButton onClick={()=>deleteTask(task.taskName)}>
+                                   <>
+                                   <IconButton onClick={()=>deleteTask(task.taskName)}>
                                         <DeleteIcon />
                                     </IconButton>
-                                    <>
+                                    
                                     {editMode && editableTaskId === task.taskId ?
                                     <>
                                     <IconButton onClick={handleUpdateRow}>
@@ -220,8 +220,9 @@ return <>
                                     <IconButton onClick={()=>editTask(task.taskId)}>
                                         <EditIcon />
                                     </IconButton>
-                                    }
+}
                                     </>
+                                    }
                                 </TableCell>
                             </TableRow>    
                         )}
