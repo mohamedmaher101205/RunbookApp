@@ -123,7 +123,7 @@ export const createTask = (task,bookId) => post(`task/CreateTask/${bookId}`,task
 
 export const getAllTasks = stageId => get(`task/GetTasks/${stageId}`);
 
-export const getStatuses = (tenantId) => get(`book/GetStatuses/${tenantId}`);
+export const getStatuses = () => get(`book/GetStatuses`);
 
 export const updateTasksStatus = (ids,statusId) => put(`task/UpdateTasks/${ids}/${statusId}`);
 
@@ -178,3 +178,5 @@ export const updateTask = (taskId,task) => post(`task/UpdateTask/${taskId}`,task
 export const createTeam = (team) => post(`team/CreateTeam`,team);
 
 export const getAllTeams = (tenantId) => get(`team/GetTeams/${tenantId}`);
+
+export const subscribeToTask = (taskId,emailId) => put(`task/subscribeTask/${taskId}/${emailId}`);
