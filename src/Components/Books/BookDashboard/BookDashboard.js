@@ -6,6 +6,10 @@ import { Button, Row, Col } from 'reactstrap';
 import { StatusColor } from '../../../Constants/Status';
 import './BookDashboard.css';
 import AddIcon from '@material-ui/icons/Add';
+import AddUsers from '../../Users and Groups/Users/AddUsers'
+
+
+
 
 var jwt = require('jsonwebtoken');
 
@@ -14,7 +18,10 @@ function MBookDashboard(props){
 
     const [books,setBooks] = useState(null);
     const [drawerFlag,setDrawerFlag] = useState(false);
+    const [drawerFlagAddUser,setDrawerFlagAddUser] = useState(false);
     const [bookCreated,setBookCreated] = useState(false);
+    const [rolelevel,setrolelevel] = useState(null);
+    
 
     var token = sessionStorage.getItem('token');
     var tenantId = sessionStorage.getItem('TenantId');
@@ -31,14 +38,28 @@ function MBookDashboard(props){
     }
 
 return <>
+  <Row>
+                   <Col sm={10}>
+                <AddUsers rolelevel="Book"  drawerFlag={drawerFlagAddUser} setDrawerFlag={setDrawerFlagAddUser} />
+            </Col>
+            <Col sm={2}>
+                {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
+       
+                <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setDrawerFlagAddUser(!drawerFlagAddUser,rolelevel)} >
+                    Add User
+                </Button>
+}
+                
+            </Col>
+
+        </Row>
+        <Row></Row>
     <Row>
         <Col sm={10}></Col>
         <Col sm={2}>
-            {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
             <MButton variant="contained" style={{float:"right"}} size="medium" color="primary" startIcon={<AddIcon /> } onClick={()=>setDrawerFlag(true)}>
                 Add Book
             </MButton>
-            }
         </Col>
         <BookForm isBookCreated={setBookCreated} setDrawerFlag={setDrawerFlag} drawerFlag={drawerFlag} />
     </Row>

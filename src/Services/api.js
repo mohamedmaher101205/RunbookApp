@@ -55,6 +55,10 @@ const post = (url,data) => {
         if(typeof(error.response) !== 'undefined' && error.response.status === 401){
             logout();
         }
+        if(error.response.status === 409){
+            console.log("Duplicate in api")
+            return error;
+        }
         return `Error posting data to url :${url}, Error:${error}`
     })
 }
@@ -103,7 +107,7 @@ const httpdelete = (url) => {
 
 export const registerUser = user => authPost(`auth/Register`,user);
 
-export const login = user => authPost(`auth/Login`, user);
+export const login = (user) => authPost(`auth/Login`, user);
 
 export const ForgotPasswordSendOTP = user => authPost(`auth/ForgotPasswordSendOTP`,user);
 
@@ -123,7 +127,7 @@ export const createTask = (task,bookId) => post(`task/CreateTask/${bookId}`,task
 
 export const getAllTasks = stageId => get(`task/GetTasks/${stageId}`);
 
-export const getStatuses = () => get(`book/GetStatuses`);
+export const getStatuses = (tenantId) => get(`book/GetStatuses/${tenantId}`);
 
 export const updateTasksStatus = (ids,statusId) => put(`task/UpdateTasks/${ids}/${statusId}`);
 
@@ -147,17 +151,17 @@ export const deleteTaskInAllEnvs = (bookId,taskName) => httpdelete(`task/DeleteT
 
 export const getAllUsers = (tenantId) => get(`user/GetUsers/${tenantId}`);
 
-export const createGroup = (tenantId,group) => post(`group/CreateGroup/${tenantId}`,group);
+// export const createGroup = (tenantId,group) => post(`group/CreateGroup/${tenantId}`,group);
 
-export const getTenantGroups = (tenantId) => get(`group/GetGroups/${tenantId}`);
+// export const getTenantGroups = (tenantId) => get(`group/GetGroups/${tenantId}`);
 
-export const addUsersToGroups = (groupId,userIds) => post(`group/AddGroupUsers/${groupId}/${userIds}`);
+// export const addUsersToGroups = (groupId,userIds) => post(`group/AddGroupUsers/${groupId}/${userIds}`);
 
-export const getGroupUsers = (groupId) => get(`group/GetGroupUsers/${groupId}`);
+// export const getGroupUsers = (groupId) => get(`group/GetGroupUsers/${groupId}`);
 
 export const getTenant = (tenantId) => get(`user/GetTenant/${tenantId}`);
 
-export const getEmail = (emailId) => post(`user/InviteUserByEmail/${emailId}`);
+export const getEmail = (InviteUsers) => post(`user/InviteUserByEmail`,InviteUsers);
 
 export const createCustomEnvironment = (env,tenantId) => post(`environment/CreateEnvironment/${tenantId}`,env);
 
@@ -171,6 +175,10 @@ export const createResource = (resource,tenantId) => post(`resource/CreateResour
 
 export const getResources = (tenantId) => get(`resource/GetResources/${tenantId}`);
 
-export const getPermissions = () => get('group/GetPermissions');
+// export const getPermissions = () => get('group/GetPermissions');
 
 export const updateTask = (taskId,task) => post(`task/UpdateTask/${taskId}`,task);
+
+export const createTeam = (team) => post(`team/CreateTeam`,team);
+
+export const getAllTeams = (tenantId) => get(`team/GetTeams/${tenantId}`);

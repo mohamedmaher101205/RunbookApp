@@ -41,8 +41,6 @@ function ApplicationTable(props){
       },[token, appAdded, tenantId]);
 
     return <>
-    {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
-        <>
         <Row>
             <Col sm={7}></Col>
             <Col sm={3}>
@@ -74,8 +72,6 @@ function ApplicationTable(props){
             <ResourceForm drawerFlag={resourceDrawer} setDrawerFlag={setResourceDrawer} />
             <ResourceTypeForm drawerFlag={resourceTypeDrawer} setDrawerFlag={setResourceTypeDrawer} />
         </Row>
-        </>
-    }
         <br />
         <Row>
             {

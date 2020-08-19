@@ -41,11 +41,9 @@ function EnvironmentsTable(props){
     <Row>
         <Col sm={9}></Col>
         <Col sm={3}>
-            {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
-                <Button variant="contained" style={{float:"right"}} color="primary" size="medium" startIcon={<AddIcon />} onClick={()=>setEnvDrawerFlag(true)}>
-                    Add Environment
-                </Button>
-            }
+            <Button variant="contained" style={{float:"right"}} color="primary" size="medium" startIcon={<AddIcon />} onClick={()=>setEnvDrawerFlag(true)}>
+                Add Environment
+            </Button>
         </Col>
         <EnvironmentForm drawerFlag={envDrawerFlag} setDrawerFlag={setEnvDrawerFlag} />
     </Row>

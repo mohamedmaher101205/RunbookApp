@@ -56,13 +56,35 @@ function MSignUp() {
         setRegisterStatus(res.data);
         setStatusFlag(true);
         if(user !== null && res.status === 200){
+          var inviteUrlDetails = null;
+          var inviteRoleLevelDetails =  null;
+          var getUserDetails = res.data[0];
+          if(getUserDetails !== undefined)
+          {
+            inviteUrlDetails =  getUserDetails.inviteUrl;
+            inviteRoleLevelDetails = getUserDetails.inviteRoleLevel;
+          }
+         
           login(user).then(res=>{
             if(res.status === 200){
+              if(inviteUrlDetails==null)
+              {
               window.location.href = '/dashboard';
+              }
+                else
+                {
+                window.location.href = inviteUrlDetails;
+                }
+
               sessionStorage.setItem('token', res.data.token);
             }
           })
         }
+    }).catch(err => {
+      if(err.response.status === 409){
+        setRegisterStatus(err.response.data);
+        setStatusFlag(true);
+      }
     })
     reset();
 }
@@ -148,6 +170,39 @@ function MSignUp() {
                     }
                     control={control}
                     name="Password"
+                    defaultValue=""
+                    rules={{required:true}}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Controller as={
+                        <TextField variant="outlined" required fullWidth id="Designation" label="Designation" name="UserDesignation" autoComplete="Designation" 
+                        error={errors.UserDesignation && errors.UserDesignation.type === 'required'} helperText={errors.UserDesignation && "Designation is required"} ref={register} />
+                    }
+                    control={control}
+                    name="UserDesignation"
+                    defaultValue=""
+                    rules={{required:true}}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Controller as={
+                        <TextField variant="outlined" required fullWidth id="Organization" label="Organization" name="UserOrganization" autoComplete="Organization" 
+                        error={errors.UserOrganization && errors.UserOrganization.type === 'required'} helperText={errors.UserOrganization && "Organization is required"} ref={register} />
+                    }
+                    control={control}
+                    name="UserOrganization"
+                    defaultValue=""
+                    rules={{required:true}}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Controller as={
+                        <TextField variant="outlined" required fullWidth id="Phone" label="Phone" name="Phone" autoComplete="Phone" 
+                        error={errors.Phone && errors.Phone.type === 'required'} helperText={errors.Phone && "Phone is required"} ref={register} />
+                    }
+                    control={control}
+                    name="Phone"
                     defaultValue=""
                     rules={{required:true}}
                     />
