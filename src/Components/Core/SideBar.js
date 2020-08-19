@@ -90,9 +90,9 @@ export default function SideBar(props) {
                 </ListItem>
                 <Divider />
 
-                <ListItem button onClick={()=>goToComponent(`/bookdashboard`,'Books')} >
+                <ListItem button onClick={()=>goToComponent(`/teamdashboard`,'Teams')} >
                   <ListItemIcon><BookIcon /></ListItemIcon>
-                  <ListItemText primary="Books" />
+                  <ListItemText primary="Teams" />
                 </ListItem>
                 <ListItem button onClick={()=>goToComponent(`/environments`,'Environments')} >
                   <ListItemIcon><AccountTreeIcon /></ListItemIcon>
@@ -102,21 +102,6 @@ export default function SideBar(props) {
                   <ListItemIcon><AppsIcon /></ListItemIcon>
                   <ListItemText primary="Applications" />
                 </ListItem>
-                <ListItem button onClick={()=>setExpand(!expandUserGroups)}>
-                  <ListItemIcon><GroupIcon /></ListItemIcon>
-                  <ListItemText primary="Users and Groups" />
-                  {expandUserGroups ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={expandUserGroups}>
-                  <List>
-                    <ListItem button>
-                      <ListItemText primary="Users" className={classes.nested} onClick={()=>goToComponent('/users')} />
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemText primary="Groups" className={classes.nested} onClick={()=>goToComponent('/group')} />
-                    </ListItem>
-                  </List>
-                </Collapse>
             </List>
           </div>
         </Drawer>
@@ -134,9 +119,9 @@ export default function SideBar(props) {
                 </ListItem>
                 <Divider />
 
-                <ListItem button onClick={()=>goToComponent(`/bookdashboard`,'Books')} >
+                <ListItem button onClick={()=>goToComponent(`/teamdashboard`,'Teams')} >
                   <ListItemIcon><BookIcon /></ListItemIcon>
-                  <ListItemText primary="Books" />
+                  <ListItemText primary="Teams" />
                 </ListItem>
                 <ListItem button onClick={()=>goToComponent(`/environments`,'Environments')} >
                   <ListItemIcon><AccountTreeIcon /></ListItemIcon>
@@ -146,21 +131,6 @@ export default function SideBar(props) {
                   <ListItemIcon><AppsIcon /></ListItemIcon>
                   <ListItemText primary="Applications" />
                 </ListItem>
-                <ListItem button onClick={()=>setExpand(!expandUserGroups)}>
-                  <ListItemIcon><GroupIcon /></ListItemIcon>
-                  <ListItemText primary="Users and Groups" />
-                  {expandUserGroups ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={expandUserGroups}>
-                  <List>
-                    <ListItem button>
-                      <ListItemText primary="Users" className={classes.nested} onClick={()=>goToComponent('/users')} />
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemText primary="Groups" className={classes.nested} onClick={()=>goToComponent('/group')}/>
-                    </ListItem>
-                  </List>
-                </Collapse>
             </List>
           </div>
         </Drawer>

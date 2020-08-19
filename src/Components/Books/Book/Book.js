@@ -124,7 +124,6 @@ function Book(props){
                         )}
                     </Menu>
             </Col>
-            {(user.Permissions.includes("Create") || user.Permissions.includes("Update") || (user.IsAdmin.toLowerCase() === 'true')) && <>
             <Col sm={2}>
             
             
@@ -156,8 +155,6 @@ function Book(props){
                     Add Stage
                 </MButton>
             </Col>
-            </>
-            }
         </Row>
         <Row>
             <Col sm={12}>
