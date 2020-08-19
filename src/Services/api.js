@@ -107,7 +107,7 @@ const httpdelete = (url) => {
 
 export const registerUser = user => authPost(`auth/Register`,user);
 
-export const login = user => authPost(`auth/Login`, user);
+export const login = (user) => authPost(`auth/Login`, user);
 
 export const CreateBook = (book) => post(`book/CreateBook`,book);
 
@@ -157,7 +157,7 @@ export const getAllUsers = (tenantId) => get(`user/GetUsers/${tenantId}`);
 
 export const getTenant = (tenantId) => get(`user/GetTenant/${tenantId}`);
 
-export const getEmail = (emailId) => post(`user/InviteUserByEmail/${emailId}`);
+export const getEmail = (InviteUsers) => post(`user/InviteUserByEmail`,InviteUsers);
 
 export const createCustomEnvironment = (env,tenantId) => post(`environment/CreateEnvironment/${tenantId}`,env);
 
