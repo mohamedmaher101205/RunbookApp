@@ -60,7 +60,6 @@ function MResetPassword(prop) {
   const [loader,setLoader] = useState(false);
 
 const submitResetPassword = (user) =>{
-  alert(OTP);
   if(OTP === user.UserOTP){
     setLoader(true);
     ResetPassword(user).then(res=>{
