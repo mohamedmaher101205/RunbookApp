@@ -9,6 +9,7 @@ import Application from '../../Applications/Application';
 import { Button as MButton, Menu, MenuItem, Typography, Tabs, Tab, Badge, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import {ExpandLess,ExpandMore} from '@material-ui/icons';
+import AddUsers from '../../Users and Groups/Users/AddUsers';
 
 var jwt = require('jsonwebtoken');
 
@@ -41,6 +42,7 @@ function Book(props){
     const [tabValue,setTabValue] = useState(0);
     const [bookapplications,setBookApplications] = useState(null);
     const [cuurentEnv,setCurrentEnv] = useState(null);
+    const[drawerFlag,setDrawerFlag] = useState(false);
     // const [environments,setEnvironments] = useState(null);
  
     useEffect(()=>{
@@ -121,6 +123,16 @@ function Book(props){
                         )}
                     </Menu>
             </Col>
+            <Col sm={2}>
+            
+            
+                <AddUsers rolelevel="Team" drawerFlag={drawerFlag} setDrawerFlag={setDrawerFlag} />
+                  
+                <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setDrawerFlag(!drawerFlag)} >
+                    Add User
+                </Button>
+            </Col>
+            
             <Col sm={2}>
                 <Application bookId={bookId} drawerFlag={applicationDrawer} setDrawerFlag={setApplicationDrawer} />
                 <MButton variant="contained" style={{float:"right"}} size="medium" color="primary" startIcon={<AddIcon /> } onClick={()=>setApplicationDrawer(true)}>
