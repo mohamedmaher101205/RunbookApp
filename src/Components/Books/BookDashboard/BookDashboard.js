@@ -8,6 +8,7 @@ import './BookDashboard.css';
 import AddIcon from '@material-ui/icons/Add';
 import AddUsers from '../../Users and Groups/Users/AddUsers';
 
+
 var jwt = require('jsonwebtoken');
 
 
@@ -15,8 +16,10 @@ function MBookDashboard(props){
 
     const [books,setBooks] = useState(null);
     const [drawerFlag,setDrawerFlag] = useState(false);
+    const [drawerFlagAddUser,setDrawerFlagAddUser] = useState(false);
     const [bookCreated,setBookCreated] = useState(false);
     const[userDrawerFlag,setUserDrawerFlag] = useState(false);
+    const [rolelevel,setrolelevel] = useState(null);
 
     var token = sessionStorage.getItem('token');
     var tenantId = sessionStorage.getItem('TenantId');

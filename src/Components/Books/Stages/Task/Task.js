@@ -14,6 +14,11 @@ import './Task.css';
 import { Table, TableContainer, Paper, TableHead, TableCell, TableBody, TableRow, IconButton, 
     Button as MButton, Input,ListItemText,List,ListItem, ListItemAvatar,Avatar,Menu, MenuItem, Select} from '@material-ui/core';
 
+import AddIcon from '@material-ui/icons/Add';
+import { Table, TableContainer, Paper, TableHead, TableCell, TableBody, TableRow, IconButton, Button as MButton, Input} from '@material-ui/core';
+import AddUsers from '../../../Users and Groups/Users/AddUsers';
+
+
 var jwt = require('jsonwebtoken');
 
 function Task(props){
@@ -36,6 +41,8 @@ function Task(props){
     const[selectedUser,setSelectedUser] = useState(null);
     const [statuses,setStatuses] = useState(null);
     const [currentTaskStatus,setCurrentTaskStatus] = useState('');
+    const [drawerFlagAddUser,setDrawerFlagAddUser] = useState(false);
+    const [rolelevel,setrolelevel] = useState(null);
 
     useEffect(()=>{
         getAllTasks(stageId).then(res=>{
@@ -178,6 +185,12 @@ return <>
                             <TableCell>Comments</TableCell>
                             <TableCell>Assignee</TableCell>
                             <TableCell>Status</TableCell>
+
+                            <TableCell></TableCell>
+                            {(user.Permissions.includes("Update") ||
+                                user.Permissions.includes("Delete") || user.IsAdmin.toLowerCase() === 'true') &&
+                                <TableCell>Actions</TableCell>
+                            }
                             <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
@@ -248,13 +261,28 @@ return <>
                                 }
                                 </TableCell>
                                 <TableCell>
-                                    <IconButton onClick={()=>deleteTask(task.taskName)}>
+                                <AddUsers rolelevel="Task" drawerFlag={drawerFlagAddUser} setDrawerFlag={setDrawerFlagAddUser} />
+            
+           
+ 
+       
+                <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setDrawerFlagAddUser(!drawerFlagAddUser,rolelevel)} >
+                    Add User
+                </Button>
+                                </TableCell>
+
+                                <TableCell>
+                                {(user.Permissions.includes("Delete") || user.IsAdmin.toLowerCase() === 'true') &&
+                                   <>
+                                   <IconButton onClick={()=>deleteTask(task.taskName)}>
                                         <DeleteIcon />
                                     </IconButton>
+
                                     <IconButton onClick={()=>subscribeToTask(task.taskId)}>
                                         <NotificationsIcon />
                                     </IconButton>
                                     <>
+
                                     {editMode && editableTaskId === task.taskId ?
                                     <>
                                     <IconButton onClick={handleUpdateRow}>
@@ -268,8 +296,9 @@ return <>
                                     <IconButton onClick={()=>editTask(task.taskId)}>
                                         <EditIcon />
                                     </IconButton>
-                                    }
+}
                                     </>
+                                    }
                                 </TableCell>
                             </TableRow>    
                         )}

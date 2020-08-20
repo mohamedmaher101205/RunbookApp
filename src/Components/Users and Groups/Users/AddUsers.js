@@ -53,8 +53,8 @@ function AddUsers(props){
     const classes = useStyles();
 
     useEffect(()=>{
-        setDrawerFlag(props.drawerFlag);
-    },[props.drawerFlag])
+        setDrawerFlag(props.drawerFlag,props.rolelevel);
+    },[props.drawerFlag,props.rolelevel])
 
     const handlesearchKey = (e) =>{
         var key = e.target.value;
@@ -66,14 +66,25 @@ function AddUsers(props){
         props.setDrawerFlag(false);
     }
 
-    const AddUsers = () =>{
-        getEmail(searchKey);
+    const AddUsers = (data) =>{
+       data.InviteUserEmailId = searchKey;
+       data.InviteUrl = window.location.pathname;
+       data.InviteRoleLevel = props.rolelevel;
+     
+       getEmail(data).then(res=>{
+        if(res !== 'Email sent successfully'){
+         alert("User already Exist or Already Invitation Sent")
+        }
+    })
+
+
         props.setDrawerFlag(false);
         setDrawerFlag(false);
     }
     return <>
+    
     <div className={classes.root}>
-        <SwipeableDrawer className={classes.drawer} classes={{paper:classes.drawerPaper}} onOpen={()=>setDrawerFlag(true)} open={drawerFlag} anchor="right" onClose={closeDrawer}>
+         <SwipeableDrawer className={classes.drawer} classes={{paper:classes.drawerPaper}} onOpen={()=>setDrawerFlag(true)} open={drawerFlag} anchor="right" onClose={closeDrawer}>
             <Row className={classes.drawerHeader}>
                 <Col xs={10}>
                     <div className={classes.headerTitle}>
