@@ -109,6 +109,10 @@ export const registerUser = user => authPost(`auth/Register`,user);
 
 export const login = (user) => authPost(`auth/Login`, user);
 
+export const ForgotPasswordSendOTP = user => authPost(`auth/ForgotPasswordSendOTP`,user);
+
+export const ResetPassword = user => authPost(`auth/ResetPassword`,user);
+
 export const CreateBook = (book) => post(`book/CreateBook`,book);
 
 export const getBookById = id => get(`book/GetBookById/${id}`);

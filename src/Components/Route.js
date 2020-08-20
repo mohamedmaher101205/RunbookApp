@@ -13,6 +13,10 @@ import {Link as LinkRouter} from 'react-router-dom';
 import EnvironmentsTable from './Environments/Environments';
 import MSignIn from './Authentication/SignIn';
 import MSignUp from './Authentication/SignUp';
+import MForgotPassword from './Authentication/ForgotPassword';
+import MResetPassword from './Authentication/ResetPassword';
+import Users from './Users and Groups/Users/Users';
+import Group from './Users and Groups/Groups/Group';
 import { getTenant } from '../Services/api';
 import Teams from './Teams/Teams';
 
@@ -84,6 +88,14 @@ return <>
             <MSignUp />
           )} />
            
+           <Route path="/forgotpassword" render={({history})=>(
+            <MForgotPassword />
+          )} />
+
+         <Route path="/ResetPassword" render={({history})=>(
+            <MResetPassword />
+          )} />
+
           <Route path="/logincallback" render={({history})=>(
             <LoginCallback onHistory={history} />
           )} />
