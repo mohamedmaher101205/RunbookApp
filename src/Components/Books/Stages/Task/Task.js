@@ -15,7 +15,6 @@ import { Table, TableContainer, Paper, TableHead, TableCell, TableBody, TableRow
     Button as MButton, Input,ListItemText,List,ListItem, ListItemAvatar,Avatar,Menu, MenuItem, Select} from '@material-ui/core';
 
 import AddIcon from '@material-ui/icons/Add';
-import { Table, TableContainer, Paper, TableHead, TableCell, TableBody, TableRow, IconButton, Button as MButton, Input} from '@material-ui/core';
 import AddUsers from '../../../Users and Groups/Users/AddUsers';
 
 
@@ -172,165 +171,155 @@ function Task(props){
 return <>
         <Row className="taskcontainer">
             <Col sm={12}>
-        {tasks !== null && tasks.length > 0 ?
-                <>
-                <Row>
-                <TableContainer component={Paper} >
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Task</TableCell>
-                            <TableCell>Description</TableCell>
-                            <TableCell>Completion Date</TableCell>
-                            <TableCell>Comments</TableCell>
-                            <TableCell>Assignee</TableCell>
-                            <TableCell>Status</TableCell>
-
-                            <TableCell></TableCell>
-                            {(user.Permissions.includes("Update") ||
-                                user.Permissions.includes("Delete") || user.IsAdmin.toLowerCase() === 'true') &&
-                                <TableCell>Actions</TableCell>
-                            }
-                            <TableCell>Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tasks.map(task=>
-                            <TableRow key={task.taskId}>
-                                <TableCell>
-                                    {(editMode && editableTaskId === task.taskId) ?
-                                        <Input name="taskName" defaultValue={task.taskName} fullWidth onChange={handleEdit} />
-                                        :
-                                        task.taskName
-                                    }
-                                </TableCell>
-                                <TableCell>
-                                {(editMode && editableTaskId === task.taskId) ?
-                                        <Input name="description" defaultValue={task.description} fullWidth onChange={handleEdit} />
-                                        :
-                                        task.description
-                                    }
-                                </TableCell>
-                                <TableCell>
-                                    {task.completedByDate.split('T')[0]}
-                                </TableCell>
-                                <TableCell>
-                                {(editMode && editableTaskId === task.taskId) ?
-                                        <Input name="releaseNote" defaultValue={task.releaseNote} fullWidth onChange={handleEdit} />
-                                        :
-                                        task.releaseNote !== null ? task.releaseNote : '-'
-                                    }
-                                </TableCell>
-                                <TableCell>
-                                {(editMode && editableTaskId === task.taskId) ?
-                                    <>
-                                    <Input name="assignedTo" onChange={(e)=>handlesearchKey(e)} fullWidth value={searchKey} />
-                                    <List dense>
-                                        {users !== null && users.filter(data=>{
-                                            if (searchKey === null || searchKey === '') return null;
-                                            else if(data.firstName.toLowerCase().includes(searchKey) 
-                                            || data.lastName.toLowerCase().includes(searchKey) 
-                                            || data.userEmail.toLowerCase().includes(searchKey))
-                                            return data;
-                                            }).map(data=>
-                                                <ListItem key={data.userId} button onClick={()=>handleAddUsers(data)}>
-                                                    <ListItemAvatar>
-                                                        <Avatar>{data.firstName[0].toUpperCase()+data.lastName[0].toUpperCase()}</Avatar>
-                                                    </ListItemAvatar>
-                                                    <ListItemText secondary={data.userEmail}>{data.firstName+' '+data.lastName}</ListItemText>
-                                                </ListItem>
-                                        )}
-                                    </List>
-                                    </>
-                                    :
-                                    task.assignedTo !== null ? task.assignedTo : 'Not Assigned'
-                                }
-                                 
-                                </TableCell>
-                                <TableCell>
-                                {(editMode && editableTaskId === task.taskId) ? 
-                                    <>
-                                    <Select onChange={handleStatusChange} value={currentTaskStatus.description}>
-                                        {statuses !== null && statuses.map(status => 
-                                            <MenuItem key={status.statusId} value={status}> {status.description} </MenuItem>    
-                                        )}
-                                    </Select>
-                                    </>
-                                    :
-                                    task.statusDescription
-                                }
-                                </TableCell>
-                                <TableCell>
-                                <AddUsers rolelevel="Task" drawerFlag={drawerFlagAddUser} setDrawerFlag={setDrawerFlagAddUser} />
-            
-           
- 
-       
-                <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setDrawerFlagAddUser(!drawerFlagAddUser,rolelevel)} >
-                    Add User
-                </Button>
-                                </TableCell>
-
-                                <TableCell>
-                                {(user.Permissions.includes("Delete") || user.IsAdmin.toLowerCase() === 'true') &&
-                                   <>
-                                   <IconButton onClick={()=>deleteTask(task.taskName)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-
-                                    <IconButton onClick={()=>subscribeToTask(task.taskId)}>
-                                        <NotificationsIcon />
-                                    </IconButton>
-                                    <>
-
-                                    {editMode && editableTaskId === task.taskId ?
-                                    <>
-                                    <IconButton onClick={handleUpdateRow}>
-                                        <DoneIcon />
-                                    </IconButton>
-                                    <IconButton onClick={handleEditCancel}>
-                                        <RevertIcon />
-                                    </IconButton>
-                                    </>
-                                    :
-                                    <IconButton onClick={()=>editTask(task.taskId)}>
-                                        <EditIcon />
-                                    </IconButton>
-}
-                                    </>
-                                    }
-                                </TableCell>
-                            </TableRow>    
-                        )}
-                        
-                    </TableBody>
-                </Table>
-                <TaskForm stage={stage} bookId={bookId} taskCreated={setTaskCreated} showForm={setTaskFormFlag} />
-                </TableContainer>
                 
-                </Row><br />
+                {tasks !== null && tasks.length > 0 ?
+                        <>
+                        <Row>
+                        <TableContainer component={Paper} >
+                        <Table size="small">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Task</TableCell>
+                                    <TableCell>Description</TableCell>
+                                    <TableCell>Completion Date</TableCell>
+                                    <TableCell>Comments</TableCell>
+                                    <TableCell>Assignee</TableCell>
+                                    <TableCell>Status</TableCell>
+
+                                    <TableCell></TableCell>
+                                    {(user.Permissions.includes("Update") ||
+                                        user.Permissions.includes("Delete") || user.IsAdmin.toLowerCase() === 'true') &&
+                                        <TableCell>Actions</TableCell>
+                                    }
+                                    <TableCell>Actions</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {tasks.map(task=>
+                                    <TableRow key={task.taskId}>
+                                        <TableCell>
+                                            {(editMode && editableTaskId === task.taskId) ?
+                                                <Input name="taskName" defaultValue={task.taskName} fullWidth onChange={handleEdit} />
+                                                :
+                                                task.taskName
+                                            }
+                                        </TableCell>
+                                        <TableCell>
+                                        {(editMode && editableTaskId === task.taskId) ?
+                                                <Input name="description" defaultValue={task.description} fullWidth onChange={handleEdit} />
+                                                :
+                                                task.description
+                                            }
+                                        </TableCell>
+                                        <TableCell>
+                                            {task.completedByDate.split('T')[0]}
+                                        </TableCell>
+                                        <TableCell>
+                                        {(editMode && editableTaskId === task.taskId) ?
+                                                <Input name="releaseNote" defaultValue={task.releaseNote} fullWidth onChange={handleEdit} />
+                                                :
+                                                task.releaseNote !== null ? task.releaseNote : '-'
+                                            }
+                                        </TableCell>
+                                        <TableCell>
+                                        {(editMode && editableTaskId === task.taskId) ?
+                                            <>
+                                            <Input name="assignedTo" onChange={(e)=>handlesearchKey(e)} fullWidth value={searchKey} />
+                                            <List dense>
+                                                {users !== null && users.filter(data=>{
+                                                    if (searchKey === null || searchKey === '') return null;
+                                                    else if(data.firstName.toLowerCase().includes(searchKey) 
+                                                    || data.lastName.toLowerCase().includes(searchKey) 
+                                                    || data.userEmail.toLowerCase().includes(searchKey))
+                                                    return data;
+                                                    }).map(data=>
+                                                        <ListItem key={data.userId} button onClick={()=>handleAddUsers(data)}>
+                                                            <ListItemAvatar>
+                                                                <Avatar>{data.firstName[0].toUpperCase()+data.lastName[0].toUpperCase()}</Avatar>
+                                                            </ListItemAvatar>
+                                                            <ListItemText secondary={data.userEmail}>{data.firstName+' '+data.lastName}</ListItemText>
+                                                        </ListItem>
+                                                )}
+                                            </List>
+                                            </>
+                                            :
+                                            task.assignedTo !== null ? task.assignedTo : 'Not Assigned'
+                                        }
+                                        
+                                        </TableCell>
+                                        <TableCell>
+                                        {(editMode && editableTaskId === task.taskId) ? 
+                                            <>
+                                            <Select onChange={handleStatusChange} value={currentTaskStatus.description}>
+                                                {statuses !== null && statuses.map(status => 
+                                                    <MenuItem key={status.statusId} value={status}> {status.description} </MenuItem>    
+                                                )}
+                                            </Select>
+                                            </>
+                                            :
+                                            task.statusDescription
+                                        }
+                                        </TableCell>
+                                        <TableCell>
+                                            <AddUsers rolelevel="Task" drawerFlag={drawerFlagAddUser} setDrawerFlag={setDrawerFlagAddUser} />
+                                            <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setDrawerFlagAddUser(!drawerFlagAddUser,rolelevel)} >
+                                                Add User
+                                            </Button>
+                                        </TableCell>
+                                        <TableCell>
+                                        <>
+                                        <IconButton onClick={()=>deleteTask(task.taskName)}>
+                                                <DeleteIcon />
+                                            </IconButton>
+
+                                            <IconButton onClick={()=>subscribeToTask(task.taskId)}>
+                                                <NotificationsIcon />
+                                            </IconButton>
+
+                                            {editMode && editableTaskId === task.taskId ?
+                                            <>
+                                                <IconButton onClick={handleUpdateRow}>
+                                                    <DoneIcon />
+                                                </IconButton>
+                                                <IconButton onClick={handleEditCancel}>
+                                                    <RevertIcon />
+                                                </IconButton>
+                                            </>
+                                            :
+                                                <IconButton onClick={()=>editTask(task.taskId)}>
+                                                    <EditIcon />
+                                                </IconButton>
+                                            }
+                                            </>
+                                        </TableCell>
+                                    </TableRow>  
+                                )}
+                            </TableBody>
+                        </Table>
+                        <TaskForm stage={stage} bookId={bookId} taskCreated={setTaskCreated} showForm={setTaskFormFlag} />
+                        </TableContainer>
+                            <br />
+                            <Row>
+                                <MButton color="primary" variant="contained" onClick={completeStage} >Complete Stage</MButton>
+                            </Row>
+                        </Row>
+                        </>
+                    :
                     <Row>
-                        <MButton color="primary" variant="contained" onClick={completeStage} >Complete Stage</MButton>
-                    </Row>
-                </>
-            :
-            <>
-            <Row>
-                {taskFormFlag ? 
-                    <TaskForm stage={stage} bookId={bookId} taskCreated={setTaskCreated} showForm={setTaskFormFlag} /> 
-                : 
-                <>  
-                    <Button color="link" onClick={()=>setTaskFormFlag(!taskFormFlag)}>
-                        <FontAwesomeIcon icon={faPlus} />{' '}
-                        Create Task
-                    </Button>
-                </>
+                        {taskFormFlag ? 
+                            <TaskForm stage={stage} bookId={bookId} taskCreated={setTaskCreated} showForm={setTaskFormFlag} /> 
+                        : 
+                        <>  
+                            <Button color="link" onClick={()=>setTaskFormFlag(!taskFormFlag)}>
+                                <FontAwesomeIcon icon={faPlus} />{' '}
+                                Create Task
+                            </Button>
+                        </>
+                        }
+                    </Row>   
                 }
-            </Row>
-            </>
-        }
         </Col>
-        </Row>
+    </Row>
     </>
 }
 
