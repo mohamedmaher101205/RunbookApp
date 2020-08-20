@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import { Row, Col,Button } from 'reactstrap';
-import { getAllTasks, updateTasksStatus, updateStageStatus, updateBookByEnvironment,deleteTaskInAllEnvs, updateTask } from '../../../../Services/api';
+import { getAllTasks, updateTasksStatus, updateStageStatus, updateBookByEnvironment,deleteTaskInAllEnvs, updateTask, getAllUsers, getStatuses,subscribeToTask } from '../../../../Services/api';
 import { StatusColor, StatusId, Status } from '../../../../Constants/Status';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -9,10 +9,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DoneIcon from '@material-ui/icons/Done';
 import RevertIcon from "@material-ui/icons/NotInterestedOutlined";
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import './Task.css';
+import { Table, TableContainer, Paper, TableHead, TableCell, TableBody, TableRow, IconButton, 
+    Button as MButton, Input,ListItemText,List,ListItem, ListItemAvatar,Avatar,Menu, MenuItem, Select} from '@material-ui/core';
+
 import AddIcon from '@material-ui/icons/Add';
 import { Table, TableContainer, Paper, TableHead, TableCell, TableBody, TableRow, IconButton, Button as MButton, Input} from '@material-ui/core';
 import AddUsers from '../../../Users and Groups/Users/AddUsers';
+
 
 var jwt = require('jsonwebtoken');
 
@@ -22,6 +27,7 @@ function Task(props){
     var stageId = typeof(stage) !== 'undefined' ? stage.stageId : 0;
     var token = sessionStorage.getItem('token');
     var user = jwt.decode(token);
+    var tenantId = sessionStorage.getItem('TenantId');
 
     const [tasks,setTasks] = useState(null);
     const [taskFormFlag,setTaskFormFlag] = useState(false);
@@ -30,9 +36,13 @@ function Task(props){
     const [taskDeleted,setTaskDeleted] = useState(false);
     const [editableTaskId,setEditableTaskId] = useState(0);
     const [updatedTask,setUpdatedTask] = useState({});
+    const [users,setUsers] = useState(null);
+    const [searchKey,setSearchKey] = useState('');
+    const[selectedUser,setSelectedUser] = useState(null);
+    const [statuses,setStatuses] = useState(null);
+    const [currentTaskStatus,setCurrentTaskStatus] = useState('');
     const [drawerFlagAddUser,setDrawerFlagAddUser] = useState(false);
     const [rolelevel,setrolelevel] = useState(null);
-
 
     useEffect(()=>{
         getAllTasks(stageId).then(res=>{
@@ -41,32 +51,36 @@ function Task(props){
         if(taskCreated){
             setTaskFormFlag(false);
         }
-    },[taskCreated,stageId,env,taskDeleted])
-    // console.log(envId)
-    
+        getAllUsers(tenantId).then(res=>{
+            setUsers(res);
+        })
+        getStatuses().then(res=>{
+            setStatuses(res);
+        })
+    },[taskCreated, stageId, env, taskDeleted, tenantId])
 
-    const checkBoxBtnClick = (taskId,statusId) =>{
-        const taskStarted = tasks.map(task=>task.taskId > 0);
+    // const checkBoxBtnClick = (taskId,statusId) =>{
+    //     const taskStarted = tasks.map(task=>task.taskId > 0);
 
-        if(!taskStarted.includes(false)){
-            setTaskCreated(false);
-            stagecreated(false);
-            updateStageStatus(stageId,0,Status.InProgress).then(res=>{
-                console.log(res);
-                setTaskCreated(true);
-                stagecreated(true);
-            })
+    //     if(!taskStarted.includes(false)){
+    //         setTaskCreated(false);
+    //         stagecreated(false);
+    //         updateStageStatus(stageId,0,Status.InProgress).then(res=>{
+    //             console.log(res);
+    //             setTaskCreated(true);
+    //             stagecreated(true);
+    //         })
 
-            updateBookByEnvironment(bookId,envId,Status.InProgress).then(res=>{
-                console.log("Book updated to in progress",res);
-            });
-        }
-        setTaskCreated(false);
-        updateTasksStatus(taskId,statusId).then(res=>{
-            console.log(res);
-            setTaskCreated(true);
-        });
-    }
+    //         updateBookByEnvironment(bookId,envId,Status.InProgress).then(res=>{
+    //             console.log("Book updated to in progress",res);
+    //         });
+    //     }
+    //     setTaskCreated(false);
+    //     updateTasksStatus(taskId,statusId).then(res=>{
+    //         console.log(res);
+    //         setTaskCreated(true);
+    //     });
+    // }
 
     const completeStage = () => {
 
@@ -108,6 +122,11 @@ function Task(props){
         setTaskDeleted(false);
     }
 
+    const handleAddUsers = (user) =>{
+        setSelectedUser(user)
+        setSearchKey(user.firstName);
+    }
+
     const editTask = (taskId) => {
         setEditableTaskId(taskId);
         setEditMode(true);
@@ -119,17 +138,35 @@ function Task(props){
     }
 
     const handleUpdateRow = () => {
+        updatedTask.assignedTo = selectedUser.userEmail;
+        updatedTask.statusId = currentTaskStatus.statusId;
+        updatedTask.subscribers = user.email;
         updateTask(updatedTask.taskId,updatedTask).then(res=>{
             console.log(res);
         });
         setEditableTaskId(0);
         setEditMode(false);
-        console.log("new updated task =>",updatedTask)
     }
 
     const handleEditCancel = () => {
         setEditableTaskId(0);
         setEditMode(false);
+    }
+
+    const handleStatusChange = (e) =>{
+        setCurrentTaskStatus(e.target.value);
+    }
+
+    const handlesearchKey = (e) =>{
+        var key = e.target.value;
+        setSearchKey(key);
+    }
+
+    const subscribeToTask = (taskId) =>{
+        console.log("Task subscribe => ",taskId + 'email '+user.email)
+        // subscribeToTask(taskId,user.email).then(res=>{
+        //     console.log(res);
+        // })
     }
 
 return <>
@@ -145,7 +182,8 @@ return <>
                             <TableCell>Task</TableCell>
                             <TableCell>Description</TableCell>
                             <TableCell>Completion Date</TableCell>
-                            <TableCell>Release note</TableCell>
+                            <TableCell>Comments</TableCell>
+                            <TableCell>Assignee</TableCell>
                             <TableCell>Status</TableCell>
 
                             <TableCell></TableCell>
@@ -184,10 +222,43 @@ return <>
                                     }
                                 </TableCell>
                                 <TableCell>
-                                    <Button color={StatusColor[task.statusId]} size='sm' disabled={!(user.IsAdmin.toLowerCase() === 'true') && !user.Permissions.includes("Update")}
-                                        onClick={()=>checkBoxBtnClick(task.taskId,task.statusId+1)}> 
-                                            {StatusId[task.statusId]} 
-                                    </Button>
+                                {(editMode && editableTaskId === task.taskId) ?
+                                    <>
+                                    <Input name="assignedTo" onChange={(e)=>handlesearchKey(e)} fullWidth value={searchKey} />
+                                    <List dense>
+                                        {users !== null && users.filter(data=>{
+                                            if (searchKey === null || searchKey === '') return null;
+                                            else if(data.firstName.toLowerCase().includes(searchKey) 
+                                            || data.lastName.toLowerCase().includes(searchKey) 
+                                            || data.userEmail.toLowerCase().includes(searchKey))
+                                            return data;
+                                            }).map(data=>
+                                                <ListItem key={data.userId} button onClick={()=>handleAddUsers(data)}>
+                                                    <ListItemAvatar>
+                                                        <Avatar>{data.firstName[0].toUpperCase()+data.lastName[0].toUpperCase()}</Avatar>
+                                                    </ListItemAvatar>
+                                                    <ListItemText secondary={data.userEmail}>{data.firstName+' '+data.lastName}</ListItemText>
+                                                </ListItem>
+                                        )}
+                                    </List>
+                                    </>
+                                    :
+                                    task.assignedTo !== null ? task.assignedTo : 'Not Assigned'
+                                }
+                                 
+                                </TableCell>
+                                <TableCell>
+                                {(editMode && editableTaskId === task.taskId) ? 
+                                    <>
+                                    <Select onChange={handleStatusChange} value={currentTaskStatus.description}>
+                                        {statuses !== null && statuses.map(status => 
+                                            <MenuItem key={status.statusId} value={status}> {status.description} </MenuItem>    
+                                        )}
+                                    </Select>
+                                    </>
+                                    :
+                                    task.statusDescription
+                                }
                                 </TableCell>
                                 <TableCell>
                                 <AddUsers rolelevel="Task" drawerFlag={drawerFlagAddUser} setDrawerFlag={setDrawerFlagAddUser} />
@@ -206,7 +277,12 @@ return <>
                                    <IconButton onClick={()=>deleteTask(task.taskName)}>
                                         <DeleteIcon />
                                     </IconButton>
-                                    
+
+                                    <IconButton onClick={()=>subscribeToTask(task.taskId)}>
+                                        <NotificationsIcon />
+                                    </IconButton>
+                                    <>
+
                                     {editMode && editableTaskId === task.taskId ?
                                     <>
                                     <IconButton onClick={handleUpdateRow}>

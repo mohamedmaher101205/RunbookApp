@@ -43,6 +43,8 @@ function Book(props){
     const [tabValue,setTabValue] = useState(0);
     const [bookapplications,setBookApplications] = useState(null);
     const [cuurentEnv,setCurrentEnv] = useState(null);
+    const[drawerFlag,setDrawerFlag] = useState(false);
+
     const [rolelevel,setrolelevel] = useState(null);
     // const [environments,setEnvironments] = useState(null);
  
@@ -125,24 +127,13 @@ function Book(props){
                     </Menu>
             </Col>
             <Col sm={2}>
-            
-            
-                <AddUsers rolelevel="Team" drawerFlag={drawerFlagAddUser} setDrawerFlag={setDrawerFlagAddUser} />
            
-         
-                {(user.Permissions.includes("Create") || user.IsAdmin.toLowerCase() === 'true') &&
-       
-                <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setDrawerFlagAddUser(!drawerFlagAddUser,rolelevel)} >
+                <AddUsers rolelevel="Team" drawerFlag={drawerFlag} setDrawerFlag={setDrawerFlag} />
+                  
+                <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setDrawerFlag(!drawerFlag)} >
                     Add User
                 </Button>
-}
-                
-       
-
-            
             </Col>
-            
-            
             <Col sm={2}>
                 <Application bookId={bookId} drawerFlag={applicationDrawer} setDrawerFlag={setApplicationDrawer} />
                 <MButton variant="contained" style={{float:"right"}} size="medium" color="primary" startIcon={<AddIcon /> } onClick={()=>setApplicationDrawer(true)}>
