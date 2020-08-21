@@ -10,7 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { getEmail } from '../../../Services/api';
 
 const drawerWidth = 430;
-
+var jwt = require('jsonwebtoken');
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -67,9 +67,15 @@ function AddUsers(props){
     }
 
     const AddUsers = (data) =>{
+       var token = sessionStorage.getItem('token');
+       var user = jwt.decode(token);
+       var tenantId = sessionStorage.getItem('TenantId');
        data.InviteUserEmailId = searchKey;
        data.InviteUrl = window.location.pathname;
        data.InviteRoleLevel = props.rolelevel;
+       data.TenantId = tenantId;
+       data.UserName = user.given_name[0].toUpperCase()+user.family_name[0].toUpperCase();
+       data.UserId   = user.UserId;
      
        getEmail(data).then(res=>{
         if(res !== 'Email sent successfully'){
