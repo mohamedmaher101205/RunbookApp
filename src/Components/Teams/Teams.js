@@ -42,7 +42,7 @@ return <>
         <List dense>
             {teams !== null ? <>
                 {teams.map(team=>
-                    <ListItem key={team.teamId} button> 
+                    <ListItem key={team.teamId} button onClick={()=>goToTeam(`team/${team.teamId}`)}> 
                         <ListItemText primary={team.teamName} 
                             secondary={team.description}
                         />
