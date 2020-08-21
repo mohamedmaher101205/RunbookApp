@@ -35,7 +35,7 @@ return <>
     <Row>
         <Col sm={6}></Col>
         <Col sm={2}>
-                <AddUsers rolelevel="Tenante"  drawerFlag={userDrawerFlag} setDrawerFlag={setUserDrawerFlag} />
+                <AddUsers rolelevel="Tenant"  drawerFlag={userDrawerFlag} setDrawerFlag={setUserDrawerFlag} />
             </Col>
             <Col sm={2}>
                 <Button variant="contained" style={{float:"right"}} size="medium" startIcon={<AddIcon /> } color="primary" onClick={()=>setUserDrawerFlag(!userDrawerFlag)} >
