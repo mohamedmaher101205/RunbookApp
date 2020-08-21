@@ -84,9 +84,12 @@ function AddUser(props){
     }
 
     const AddUsers = (data) =>{
+        props.setuserAdded(false);
+        console.log("Selected Users => ",selectedUsers)
       addUsersToTeam(selectedUsers,teamId).then(res=>{
           console.log(res);
           props.setuserAdded(true);
+          selectedUsers.splice(0,selectedUsers.length)
       })
         props.setDrawerFlag(false);
         setDrawerFlag(false);
