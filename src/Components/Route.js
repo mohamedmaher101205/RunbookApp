@@ -19,6 +19,7 @@ import Users from './Users and Groups/Users/Users';
 import Group from './Users and Groups/Groups/Group';
 import { getTenant } from '../Services/api';
 import Teams from './Teams/Teams';
+import Team from './Teams/Team';
 
 function RouteComponent(props){
 
@@ -132,8 +133,12 @@ return <>
             <EnvironmentsTable />
           )} />
 
-          <Route path="/teamdashboard" render={()=>(
-            <Teams />
+          <Route path="/teamdashboard" render={({history})=>(
+            <Teams onHistory={history} />
+          )} />
+
+          <Route path="/team/:id" render={(params)=>(
+            <Team {...params} />
           )} />
 
         </Switch>

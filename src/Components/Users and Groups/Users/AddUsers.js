@@ -76,8 +76,6 @@ function AddUsers(props){
          alert("User already Exist or Already Invitation Sent")
         }
     })
-
-
         props.setDrawerFlag(false);
         setDrawerFlag(false);
     }

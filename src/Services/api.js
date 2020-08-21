@@ -184,3 +184,11 @@ export const createTeam = (team) => post(`team/CreateTeam`,team);
 export const getAllTeams = (tenantId) => get(`team/GetTeams/${tenantId}`);
 
 export const subscribeToTask = (taskId,emailId) => put(`task/subscribeTask/${taskId}/${emailId}`);
+
+export const getTeam = (teamId) => get(`team/GetTeam/${teamId}`);
+
+export const addUsersToTeam = (users,teamId) => post(`team/AddMembersToTeam/${teamId}`,users);
+
+export const getTeamUsers = (teamId) => get(`team/GetTeamUsers/${teamId}`);
+
+export const removeTeamMember = (teamId,userId) => httpdelete(`team/RemoveTeamUser/${teamId}/${userId}`);
