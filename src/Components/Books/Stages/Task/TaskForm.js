@@ -48,10 +48,10 @@ function TaskForm(props){
         console.log(data);
 
         props.taskCreated(false);
-        // createTask(data,bookId).then(res=>{
-        //     console.log(res);
-        //     props.taskCreated(true);
-        // });
+        createTask(data,bookId).then(res=>{
+            console.log(res);
+            props.taskCreated(true);
+        });
         reset({TaskName : '', Description : ''});
     }
 

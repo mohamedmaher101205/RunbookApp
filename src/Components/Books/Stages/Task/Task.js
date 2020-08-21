@@ -187,10 +187,6 @@ return <>
                                     <TableCell>Status</TableCell>
 
                                     <TableCell></TableCell>
-                                    {(user.Permissions.includes("Update") ||
-                                        user.Permissions.includes("Delete") || user.IsAdmin.toLowerCase() === 'true') &&
-                                        <TableCell>Actions</TableCell>
-                                    }
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
                             </TableHead>

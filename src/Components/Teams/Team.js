@@ -35,7 +35,6 @@ function Team(props){
         </Row>
         <Row>
             <Col sm={9}>
-                
             </Col>
             <Col sm={3} style={{alignContent:'end'}}>
                 <Typography style={{textAlign:'center'}} color="textPrimary" component="h5" variant="h6">
